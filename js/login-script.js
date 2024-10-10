@@ -33,7 +33,7 @@ document.querySelector('#login').addEventListener('click', function (event) {
 
     if (cpfIndex !== -1 && senhas[cpfIndex] === senhaInput) {
         // CPF e senha correspondem
-        window.location.href = "/html/site.html"; // Redireciona para a página do site
+        window.location.href = "./html/site.html"; // Redireciona para a página do site
     } 
     
     else {
