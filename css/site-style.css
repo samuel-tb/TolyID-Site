@@ -132,7 +132,7 @@ button:hover {
 }
 
 /* Responsividade para telas menores */
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .content-container {
         display: block;
     }
