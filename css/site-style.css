@@ -1,0 +1,156 @@
+* {
+    font-family: Arial, sans-serif;
+    padding: 0;
+    box-sizing: border-box; /* Garante que padding e borda sejam incluídos na largura e altura */
+}
+
+html, body {
+    height: 100%; /* Garante que o body ocupe toda a altura da página */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Para evitar qualquer rolagem horizontal indesejada */
+}
+
+#header {
+    color: #fff;
+    background-color: #0056b3;
+    padding: 15px;
+    width: 100vw; /* Garante que o header ocupe toda a largura da tela */
+}
+
+#main {
+    display: flex;
+    flex: 1; /* Faz com que o conteúdo principal ocupe o espaço disponível */
+    justify-content: center;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    height: 100vh;
+    margin: 0;
+    padding-top: 80px; /* Adiciona espaço para o cabeçalho fixo */
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    width: 100%;
+}
+
+
+/* Navegação por abas numeradas */
+.navigation-tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.navigation-tabs button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 22%;
+    text-align: center;
+    border-radius: 4px;
+    outline: none;
+    font-size: 18px;
+}
+
+.navigation-tabs button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para o conteúdo das abas */
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.tab-content {
+    box-sizing: border-box;
+    flex: 0 0 24%; /* Cada aba ocupa 24% da largura para caber as 4 abas lado a lado */
+    margin-right: 10px;
+    background-color: #e8f0fe;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.tab-content:last-child {
+    margin-right: 0; /* Remover margem do último item */
+}
+
+/* Campos do formulário */
+input, textarea {
+    display: block;
+    width: 95%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Botões de navegação para telas pequenas */
+.navigation-buttons {
+    display: none;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 22%;
+    text-align: center;
+    border-radius: 4px;
+    outline: none;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.tabela-amostras{
+    margin-bottom: 50px;
+}
+
+.amostras-esquerda{
+    margin-right: 100px;
+}
+
+#footer {
+    background-color: #0056b3;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto; /* Garante que o footer fique no final da página */
+    width: 100%; /* Para garantir que o footer ocupe toda a largura */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 800px) {
+    .content-container {
+        display: block;
+    }
+
+    .tab-content {
+        display: none; /* Oculta todas as abas */
+    }
+
+    .tab-content.active {
+        display: block; /* Mostra apenas a aba ativa */
+    }
+
+    .navigation-buttons {
+        display: block; /* Mostra os botões de navegação em telas pequenas */
+        justify-content: space-between;
+    }
+
+    .navigation-tabs {
+        display: none; /* Oculta a navegação por abas em telas pequenas */
+    }
+}

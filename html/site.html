@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+
+    <!--Icone do Site-->
+    <link rel="shortcut icon" href="/ico/Logo.ico" type="image/x-icon">
+
+
+    <!--Linkagem do CSS-->
+    <link rel="stylesheet" href="/css/site-style.css">
+
+    <title>TolyID | Cadastro do Animal</title>
+    
+</head>
+
+<body>
+
+    <header id="header">
+
+        <div>
+            <h1>TolyID</h1>
+        </div>
+        
+        
+    </header>
+
+    <main id="main">
+        <div class="container">
+    
+            <!-- Conteúdo das abas -->
+            <div class="content-container">
+                <div id="step1" class="tab-content">
+
+                    <h2>DADOS GERAIS</h2>
+
+                    <label>Nº Identificação:</label>
+                    <input type="text" placeholder="Digite o número de identificação">
+
+                    <label>Local de Captura:</label>
+                    <input type="text" placeholder="Digite o local de captura">
+
+                    <label>Equipe Responsável:</label>
+                    <input type="text" placeholder="Digite a equipe responsável">
+
+                    <label>Instituição:</label>
+                    <input type="text" placeholder="Digite a instituição">
+
+                    <label>Peso:</label>
+                    <input type="number" placeholder="Digite o peso">
+
+                    <label>Data de Captura:</label>
+                    <input type="date">
+
+                    <label>Horário de Captura:</label>
+                    <input type="time">
+
+                    <label>Contato do Responsável:</label>
+                    <input type="tel" placeholder="Digite o contato">
+
+                    <label>Observações:</label>
+                    <textarea placeholder="Digite as observações"></textarea>
+                </div>
+
+                <div id="step2" class="tab-content">
+
+                    <h2>FICHA ANESTÉSICA</h2>
+
+                    <label>Tipo de Anestésico/Dose</label>
+                    <input type="text" placeholder="Digite o tipo de anestésico">
+
+                    <label>Via de Administração</label>
+                    <input type="text" placeholder="Digite a via de administração">
+
+                    <label>Horário da Aplicação</label>
+                    <input type="time" placeholder="Digite o horário da aplicação">
+
+                    <label>Horário da Indução</label>
+                    <input type="time" placeholder="Digite o horário da indução">
+
+                    <label>Horário do Retorno</label>
+                    <input type="time" placeholder="Digite o horário do retorno">
+
+                    <table>
+
+                        <thead>Parâmetros Fisiológicos a cada 10 minutos</thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Frequência Cardíaca</td>
+                                <td><input type="number"></td>
+                            </tr>
+
+                            <tr>
+                                <td>Frequência Respirátoria</td>
+                                <td><input type="number"></td>
+                            </tr>
+
+                            <tr>
+                                <td>Oximetria</td>
+                                <td><input type="number"></td>
+                            </tr>
+
+                            <tr>
+                                <td>Temperatura(°C)</td>
+                                <td><input type="number"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div id="step3" class="tab-content">
+
+                    <h2>BIOMETRIA</h2>
+
+                    <label>Comprimento Total</label>
+                    <input type="number">
+
+                    <label>Comprimento da cabeça</label>
+                    <input type="number">
+
+                    <label>Largura da cabeça</label>
+                    <input type="number">
+
+                    <label>Padrão escudo cefálico</label>
+                    <input type="text" placeholder="Digite o padrão do escudo cefálico">
+
+                    <label>Comprimento escudo cefálico</label>
+                    <input type="number">
+
+                    <label>Largura escudo cefálico</label>
+                    <input type="number">
+
+                    <label>Largura inter-orbital</label>
+                    <input type="number">
+
+                    <label>Comprimento da orelha</label>
+                    <input type="number">
+
+                    <label>Comprimento da cauda</label>
+                    <input type="number">
+                    
+                </div>
+
+                <div id="step4" class="tab-content">
+
+                    <h2>AMOSTRAS</h2>
+
+                    <table class="tabela-amostras">
+
+                        <tbody>
+
+                            <tr class="check-box-amostras">
+                                <td><input type="checkbox"></td>
+                                <td><label class="amostras-esquerda">Sangue</label></td>
+                                <td><input type="checkbox"></td>
+                                <td><label>Fezes</label></td>
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+                                <td><label>Pelo</label></td>
+                                <td><input type="checkbox"></td>
+                                <td><label>Ectoparasitos</label></td>
+                            
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+                                <td><label>Swab</label></td>
+                                <td><input type="checkbox"></td>
+                                <td><label>Local</label></td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                    
+                    <label>Outros</label>
+                    <input type="text" placeholder="Digite outros tipos de amostras">
+
+                </div>
+                
+            </div>
+
+            <!-- Botões de navegação para telas pequenas -->
+            <div class="navigation-buttons">
+                <button onclick="goToTab(1)">1</button>
+                <button onclick="goToTab(2)">2</button>
+                <button onclick="goToTab(3)">3</button>
+                <button onclick="goToTab(4)">4</button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+
+        <div class="copy">
+            <p>© Copyright 2024 TolyID</p>
+        </div>
+
+    </footer>
+
+    <!--Linkagem do JavaScript-->
+    <script src="/js/cadastro-animal-script.js"></script>
+
+</body>
+</html>
