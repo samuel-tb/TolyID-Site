@@ -74,7 +74,7 @@ html, body {
     box-sizing: border-box;
     flex: 0 0 24%; /* Cada aba ocupa 24% da largura para caber as 4 abas lado a lado */
     margin-right: 10px;
-    background-color: #e8f0fe;
+    background-color: #9dccfc;
     padding: 20px;
     border-radius: 8px;
 }

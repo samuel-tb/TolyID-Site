@@ -18,7 +18,7 @@
 }
 .login-form-2{
     padding: 9%;
-    background:#94a8ca;
+    background:#9dccfc;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 .login-form-2 h3{
@@ -75,6 +75,6 @@
 }
 
 .mensagem-cadastro{
-    color: #94a8ca;
+    color: #9dccfc;
     font-weight: 600;
 }

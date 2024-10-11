@@ -149,7 +149,7 @@ button:hover {
 .animal-item {
     display: flex;
     align-items: center;
-    background-color: #9dccfc; /* Cor de fundo dos itens, pode ajustar conforme preferir */
+    background-color: #9dccfc; /* Cor de fundo dos itens*/
     margin-bottom: 10px; /* Espaço entre os itens */
     padding: 10px;
     border-radius: 8px; /* Arredondando os cantos para deixar mais suave */
