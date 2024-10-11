@@ -1,4 +1,4 @@
-//#region Comandos das abas - Samuel
+//#region Código dos botões para passar de aba
 let currentTab = 1; // Aba inicial (primeira aba)
 
 function goToTab(tabIndex) {
