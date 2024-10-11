@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Icone do Site-->
+    <link rel="shortcut icon" href="../ico/Logo.ico" type="image/x-icon">
+
+    <!--Linkagem CSS-->
+    <link rel="stylesheet" href="../css/tela-id-style.css">
+
+    <title>TolyID | Cadastro de Id do Animal</title>
+    
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>TolyID</h1>
+        <button class="addAnimalBtn" id="addAnimalBtn">+</button>
+    </header>
+
+    <!-- Conteúdo principal da página -->
+    <main>
+        <br>
+        <h2>Bem-vindo ao sistema TolyID</h2>
+        <br>
+        <p class="aviso">Clique no botão abaixo para cadastrar um novo animal!</p>
+        <br>
+        <button id="openCadastroBtn">Cadastrar</button>
+    </main>
+
+    <!-- Modal (oculto por padrão) -->
+    <div id="animalModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="CabId">Identificação</h2>
+            <div class="input-container">
+                <label for="animalId">Digite a Identificação do animal:</label>
+                <input type="text" id="animalId" class="input-field">
+            </div>
+            <div class="buttons">
+                <button class="btn cancel">Cancelar</button>
+                <button class="btn add">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cadastro de identificação do animal -->
+    <div id="animalModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Identificação do Animal</h2>
+            <label for="animalId">Digite:</label>
+            <input type="text" id="animalId" placeholder="Digite a identificação do animal">
+
+            <div class="buttons">
+                <button class="btn cancel">Cancelar</button>
+                <button class="btn add">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Área onde os registros dos animais serão exibidos -->
+    <div id="registroAnimais" style="display:none;">
+        <h2>Animais Cadastrados:</h2>
+        <div id="listaAnimais"></div> <!-- Lista onde os animais serão mostrados -->
+    </div>
+
+    <footer id="footer">
+
+        <div class="copy">
+            <p>© Copyright 2024 TolyID</p>
+        </div>
+
+    </footer>
+
+    <script src="../js/tela-id-script.js"></script>
+</body>
+</html>
