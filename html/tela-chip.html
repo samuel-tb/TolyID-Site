@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Icone do Site-->
+    <link rel="shortcut icon" href="../ico/Logo.ico" type="image/x-icon">
+
+    <!--Linkagem CSS-->
+    <link rel="stylesheet" href="../css/tela-chip-style.css">
+
+    <title>TolyID | Cadastro de Microchip</title>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>TolyID</h1>
+        <!-- Substitua a imagem do ícone de microchip pelo caminho correto -->
+        <a href="#" id="microchipIcon"><img src="../img/chip.png" alt="Microchip" style="width: 50px; height: 50px;"></a>
+    </header>
+
+    <!-- Conteúdo principal da página -->
+    <main>
+        <br>
+        <h2>Bem-vindo ao cadastro do microchip</h2>
+        <br>
+        <p class="aviso">Clique abaixo para cadastrar um novo microchip!</p>
+        <br>
+        <button id="openCadastroBtn">Cadastrar Microchip</button>
+    </main>
+
+    <!-- Modal (oculto por padrão) -->
+    <div id="microchipModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="CabId">Cadastro de Microchip</h2>
+            <div class="input-container">
+                <label for="microchipId">Digite o número do microchip:</label>
+                <input type="text" id="microchipId" class="input-field">
+            </div>
+            <div class="buttons">
+                <button class="btn cancel">Cancelar</button>
+                <button class="btn add">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Área onde os registros dos microchips serão exibidos -->
+    <div id="registroMicrochips" style="display:none;">
+        <h2>Microchips Cadastrados:</h2>
+        <div id="listaMicrochips"></div> <!-- Lista onde os microchips serão mostrados -->
+    </div>
+
+    <footer id="footer">
+        <div class="copy">
+            <p>© Copyright 2024 TolyID</p>
+        </div>
+    </footer>
+
+    <script src="../js/tela-chip-script.js"></script>
+</body>
+</html>

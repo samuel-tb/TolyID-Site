@@ -1,0 +1,179 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+main {
+    text-align: center;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.CabId{
+    text-align: center;
+}
+
+/* Estilos do corpo */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Estilos do cabeçalho */
+header {
+    background-color: #0056b3;
+    color: white;
+    padding: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img {
+    cursor: pointer;
+}
+
+/* Estilos do modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos do conteúdo do modal */
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    position: relative;
+}
+
+/* Estilos do botão de fechar */
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* Estilos dos campos de entrada */
+.input-container {
+    margin: 20px 0;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilos dos botões do modal */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn.cancel {
+    background-color: #dc3545;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+#registroMicrochips {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+#registroMicrochips h2 {
+    margin-bottom: 20px;
+}
+
+/* Espaçamento entre os itens da lista de microchips com fundo branco */
+.microchip-item {
+    display: flex;
+    align-items: center;
+    background-color: #9dccfc; /* Cor de fundo dos itens */
+    margin-bottom: 10px; /* Espaço entre os itens */
+    padding: 10px;
+    border-radius: 8px; /* Arredondando os cantos para deixar mais suave */
+}
+
+.microchip-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.microchip-item p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Estilos para o link do ID do microchip */
+.microchip-link {
+    text-decoration: none;  /* Remove a linha embaixo do link */
+    color: #007bff;         /* Define a cor padrão do link */
+    font-weight: bold;      /* Deixa o texto em negrito */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para hover */
+}
+
+/* Estilos para o link ao passar o mouse */
+.microchip-link:hover {
+    color: white;           /* Muda a cor do texto ao passar o mouse */
+    background-color: #007bff; /* Adiciona um fundo azul no hover */
+    padding: 5px;           /* Um pouco de espaçamento interno no hover */
+    border-radius: 5px;     /* Bordas arredondadas no hover */
+}
+
+
+#footer {
+    margin-top: auto;
+}
+
+.copy {
+    background-color: #0056b3;
+    color: #fff;
+    text-align: center;
+    padding: 31px;
+    width: 100%;
+}
+
