@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(function () {
                 errorMessage.remove();
             }, 3000);
-
+            
             return;
         }
 
@@ -109,7 +109,35 @@ document.addEventListener('DOMContentLoaded', function () {
             successMessage.remove();
             modal.style.display = 'none'; // Fecha o modal após adicionar
         }, 3000);
-    });
-    
 
+        Cadastro_Api();
+    });
+
+//#region Função para jogar o Cadastro do Tatu na API
+function Cadastro_Api(){
+     const url = 'http://localhost:8080/tatus/cadastrar';
+
+// Dados que você quer enviar no corpo da requisição
+const dados = {
+    identificacaoAnimal: localStorage.getItem('NumeroId'),
+    numeroMicrochip: microchipId,
+};
+
+// Fazendo a requisição POST com fetch
+fetch(url, {
+    method: 'POST', // Método HTTP
+    headers: {
+        'Content-Type': 'application/json' // Define o tipo de conteúdo como JSON
+    },
+    body: JSON.stringify(dados) // Converte os dados para uma string JSON
+})
+.then(response => response.json()) // Converte a resposta para JSON
+.then(data => {
+    console.log('Sucesso:', data); // Manipula a resposta da API
+})
+.catch((error) => {
+    console.error('Erro:', error); // Lida com possíveis erros
 });
+    }
+    //#endregion
+}); 

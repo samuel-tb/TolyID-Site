@@ -40,29 +40,3 @@ window.addEventListener('resize', function() {
     }
 });
 //#endregion 
-
-//#region Comandos da API
-const url = "http://localhost:8080/tatus/cadastrar"
-
-// Dados que você quer enviar no corpo da requisição
-const dados = {
-    identificacaoAnimal:'',
-    idade: 25
-};
-
-// Fazendo a requisição POST com fetch
-fetch(url, {
-    method: 'POST', // Método HTTP
-    headers: {
-        'Content-Type': 'application/json' // Define o tipo de conteúdo como JSON
-    },
-    body: JSON.stringify(dados) // Converte os dados para uma string JSON
-})
-.then(response => response.json()) // Converte a resposta para JSON
-.then(data => {
-    console.log('Sucesso:', data); // Manipula a resposta da API
-})
-.catch((error) => {
-    console.error('Erro:', error); // Lida com possíveis erros
-});
-//#endregion

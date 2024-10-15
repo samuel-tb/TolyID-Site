@@ -107,7 +107,3 @@ document.getElementById('telefone').addEventListener('input', function (e) {
     e.target.value = formatarTelefone(e.target.value);
 });
 //#endregion
-
-//#region Comandos da API
-
-//#endregion

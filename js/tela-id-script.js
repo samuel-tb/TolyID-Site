@@ -110,4 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = 'none'; // Fecha o modal após adicionar
         }, 3000);
     });
+    
+    //#region Salvando os dados da Aba Tela-id para a API
+    localStorage.setItem('NumeroId', animalId);
+    //#endregion
 });
