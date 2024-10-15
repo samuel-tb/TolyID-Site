@@ -13,8 +13,11 @@
 }
 .login-form-1 h3{
     text-align: center;
-    margin-bottom:12%;
     color:#fff;
+}
+.login-name{
+    margin-top: 7%;
+    margin-bottom:12%;
 }
 .login-form-2{
     padding: 9%;
