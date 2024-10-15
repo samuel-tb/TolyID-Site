@@ -26,6 +26,11 @@ button {
     margin: 10px 0;
 }
 
+/* Estilos do botão ao passar o mouse */
+button:hover {
+    background-color: #0056b3;
+}
+
 .CabId{
     text-align: center;
 }
