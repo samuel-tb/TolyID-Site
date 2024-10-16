@@ -41,37 +41,40 @@ document.querySelector('#login').addEventListener('click', function (event) {
         document.querySelector(".mensagem-cadastro").innerHTML = "CPF ou senha inválidos. Por favor, tente novamente.";
     }
 
-});
-
 //#region Pegando o Token, para usar a API
 function Autenticacao(){
-const url = 'http://localhost:8080/login/token';
-
-// Dados que você quer enviar no corpo da requisição
-const dados = {
-    email: 'guilherme@toly.com',
-    senha: '123456',
-};
-
-// Fazendo a requisição POST com fetch
-fetch(url, {
-    method: 'POST', // Método HTTP
-    headers: {
-        'Content-Type': 'application/json' // Define o tipo de conteúdo como JSON
-    },
-    body: JSON.stringify(dados) // Converte os dados para uma string JSON
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error('Erro na requisição: ' + response.status);
+    const url = 'http://localhost:8080/login/token';
+    
+    // Dados que você quer enviar no corpo da requisição
+    const dados = {
+        email: 'guilherme@toly.com',
+        senha: '123456',
+    };
+    
+    // Fazendo a requisição POST com fetch
+    fetch(url, {
+        method: 'POST', // Método HTTP
+        headers: {
+            'Content-Type': 'application/json' // Define o tipo de conteúdo como JSON
+        },
+        body: JSON.stringify(dados) // Converte os dados para uma string JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.status);
+        }
+        return response.json(); // Converte a resposta para JSON
+    })
+    .then(data => {
+        const token = data;
+    })
+    .catch((error) => {
+        console.error('Erro:', error); // Lida com possíveis erros
+    });
+    
+    console.log(token);
+    localStorage.setItem('Autenticacao', token);
     }
-    return response.json(); // Converte a resposta para JSON
-})
-.then(data => {
-    const token = data;
-})
-.catch((error) => {
-    console.error('Erro:', error); // Lida com possíveis erros
+    //#endregion
+    
 });
-}
-//#endregion
