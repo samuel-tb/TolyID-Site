@@ -40,56 +40,58 @@
 
             <!-- Conteúdo das abas -->
             <div class="content-container">
-                <div id="step1" class="tab-content">
+                <form id="step1" class="tab-content">
 
                     <h2>DADOS GERAIS</h2>
 
                     <label>Nº Identificação:</label>
-                    <input type="text" placeholder="Digite o número de identificação">
+                    <input type="text" name="identificacao" placeholder="Digite o número de identificação"> 
 
                     <label>Local de Captura:</label>
-                    <input type="text" placeholder="Digite o local de captura">
+                    <input type="text" name="localcaptura" placeholder="Digite o local de captura">
 
                     <label>Equipe Responsável:</label>
-                    <input type="text" placeholder="Digite a equipe responsável">
+                    <input type="text" name="equiperesponsavel" placeholder="Digite a equipe responsável">
 
                     <label>Instituição:</label>
-                    <input type="text" placeholder="Digite a instituição">
+                    <input type="text" name="instituicao" placeholder="Digite a instituição">
 
                     <label>Peso:</label>
-                    <input type="number" placeholder="Digite o peso">
+                    <input type="number" name="peso" placeholder="Digite o peso em Kg">
 
                     <label>Data de Captura:</label>
-                    <input type="date">
+                    <input type="date" name="datacaptura">
 
                     <label>Horário de Captura:</label>
-                    <input type="time">
+                    <input type="time" name="horacaptura">
 
                     <label>Contato do Responsável:</label>
-                    <input type="tel" placeholder="Digite o contato">
+                    <input type="text" name="contatoresponsavel" onblur="mascaraDeTelefone(this)" 
+                           placeholder="Digite o contato" 
+                           onfocus="tiraHifen(this)" />
 
                     <label>Observações:</label>
-                    <textarea placeholder="Digite as observações"></textarea>
-                </div>
+                    <textarea name="observacoes" placeholder="Digite as observações"></textarea>
+                </form>
 
-                <div id="step2" class="tab-content">
+                <form id="step2" class="tab-content">
 
                     <h2>FICHA ANESTÉSICA</h2>
 
                     <label>Tipo de Anestésico/Dose:</label>
-                    <input type="text" placeholder="Digite o tipo de anestésico">
+                    <input type="text" name="tipoanestesico" placeholder="Digite o tipo de anestésico">
 
                     <label>Via de Administração:</label>
-                    <input type="text" placeholder="Digite a via de administração">
+                    <input type="text" name="viaadministracao" placeholder="Digite a via de administração">
 
                     <label>Horário da Aplicação:</label>
-                    <input type="time" placeholder="Digite o horário da aplicação">
+                    <input type="time" name="horaaplicacao" placeholder="Digite o horário da aplicação">
 
                     <label>Horário da Indução:</label>
-                    <input type="time" placeholder="Digite o horário da indução">
+                    <input type="time" name="horarioinducao" placeholder="Digite o horário da indução">
 
                     <label>Horário do Retorno:</label>
-                    <input type="time" placeholder="Digite o horário do retorno">
+                    <input type="time" name="horaretorno" placeholder="Digite o horário do retorno">
 
                     <table>
 
@@ -99,63 +101,63 @@
 
                             <tr>
                                 <td>Frequência Cardíaca:</td>
-                                <td><input type="number"></td>
+                                <td><input type="number" name="frequenciacardica"></td>
                             </tr>
 
                             <tr>
                                 <td>Frequência Respirátoria:</td>
-                                <td><input type="number"></td>
+                                <td><input type="number" name="frequenciarespiratoria"></td>
                             </tr>
 
                             <tr>
                                 <td>Oximetria:</td>
-                                <td><input type="number"></td>
+                                <td><input type="number" name="oximetria"></td>
                             </tr>
 
                             <tr>
                                 <td>Temperatura(°C):</td>
-                                <td><input type="number"></td>
+                                <td><input type="number"name="temperatura" ></td>
                             </tr>
 
                         </tbody>
                     </table>
 
-                </div>
+                </form>
 
-                <div id="step3" class="tab-content">
+                <form id="step3" class="tab-content">
 
                     <h2>BIOMETRIA</h2>
 
                     <label>Comprimento Total:</label>
-                    <input type="number">
+                    <input type="number" name="comprimentototal">
 
                     <label>Comprimento da cabeça:</label>
-                    <input type="number">
+                    <input type="number" name="comprimentocabeca">
 
                     <label>Largura da cabeça:</label>
-                    <input type="number">
+                    <input type="number" name="larguracabeca">
 
                     <label>Padrão escudo cefálico:</label>
-                    <input type="text" placeholder="Digite o padrão do escudo cefálico">
+                    <input type="text" name="padraoescudocefalico" placeholder="Digite o padrão do escudo cefálico">
 
                     <label>Comprimento escudo cefálico:</label>
-                    <input type="number">
+                    <input type="number" name="comprimentoescudocefalico">
 
                     <label>Largura escudo cefálico:</label>
-                    <input type="number">
+                    <input type="number" name="larguraescudocefalico">
 
                     <label>Largura inter-orbital:</label>
-                    <input type="number">
+                    <input type="number" name="largurainterorbital">
 
                     <label>Comprimento da orelha:</label>
-                    <input type="number">
+                    <input type="number" name="comprimentoorelha">
 
                     <label>Comprimento da cauda:</label>
-                    <input type="number">
+                    <input type="number" name="comprimentocauda">
                     
-                </div>
+                </form>
 
-                <div id="step4" class="tab-content">
+                <form id="step4" class="tab-content">
 
                     <h2>AMOSTRAS</h2>
 
@@ -164,26 +166,26 @@
                         <tbody>
 
                             <tr class="check-box-amostras">
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="sangue"></td>
                                 <td><label class="amostras-esquerda">Sangue</label></td>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="fezes"></td>
                                 <td><label>Fezes</label></td>
                             </tr>
 
                             <tr>
 
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="pelo"></td>
                                 <td><label>Pelo</label></td>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="ectoparasitos"></td>
                                 <td><label>Ectoparasitos</label></td>
                             
                             </tr>
 
                             <tr>
 
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="swab"></td>
                                 <td><label>Swab</label></td>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="local"></td>
                                 <td><label>Local</label></td>
 
                             </tr>
@@ -193,15 +195,15 @@
                     </table>
                     
                     <label>Outros:</label>
-                    <input type="text" placeholder="Digite outros tipos de amostras">
+                    <input type="text" name="outros" placeholder="Digite outros tipos de amostras">
 
-                </div>
+                </form>
 
                               
             </div>
 
             <div class="button-finalizar">
-                <button>Finalizar cadastro</button>    
+                <button id="btnSalvar">Finalizar cadastro</button>    
             </div>
             
         </div>
@@ -217,6 +219,7 @@
 
     <!--Linkagem do JavaScript-->
     <script src="../js/cadastro-geral-script.js"></script>
+    <script src="../js/form-tatu.js" defer></script>
 
 </body>
 </html>

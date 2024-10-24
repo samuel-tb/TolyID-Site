@@ -81,3 +81,17 @@
     color: #9dccfc;
     font-weight: 600;
 }
+#eye{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    /*Olho da página login*/
+}
+div eyelogin{
+    position: absolute;
+    right: 20%;
+    top: 56%;
+    cursor: pointer;
+    font-size: 25px;
+    /*Estilo olho da página login*/
+}

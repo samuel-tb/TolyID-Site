@@ -15,6 +15,20 @@ document.querySelector('input[placeholder="CPF"]').addEventListener('input', fun
     e.target.value = formatarCPF(e.target.value);
 
 });
+// Botão de mostrar senha
+function mostraSenha(){
+    var inputPass = document.getElementById('inputsenha')
+    var btnShowPass = document.getElementById('btn-senha')
+
+if(inputPass.type === 'password'){
+    inputPass.setAttribute('type', 'text')
+    btnShowPass.classList.replace('bi-eye', 'bi-eye-slash')
+}
+else{
+    inputPass.setAttribute('type', 'password')
+    btnShowPass.classList.replace('bi-eye-slash', 'bi-eye')
+    }
+}
 
 // Script para o login
 document.querySelector('#login').addEventListener('click', function (event) {
