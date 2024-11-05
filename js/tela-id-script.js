@@ -1,8 +1,7 @@
 
-
+alert(localStorage.getItem("Token"));
 
 document.addEventListener('DOMContentLoaded', function () {
-   alert(localStorage.getItem('Token'));
  //#region Função para o modal bem vindo 
     // Seleciona o modal
     const newmodal = document.getElementById("Bemvindo_Id");
@@ -37,27 +36,30 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnFechar) {
         btnFechar.addEventListener('click', async (event) => {
             event.preventDefault(); // Essa linha é útil se o botão estiver dentro de um formulário.
-    
-            const token = localStorage.getItem('Token');
-    
+            
+            let token = localStorage.getItem('Token');
+
+            if (!token) {
+                alert("Por favor, faça login primeiro.");
+                return;
+            }
+
             try {
-                const response = await fetch("http://localhost:8080/tatus/listar/c", {
+                const response = await fetch(`http://localhost:8080/tatus/listar`, {
                     method: "GET",
                     headers: {
-                        "Authorization": `Bearer ${localStorage.getItem('Token')}`, // Autenticação usando o token
-                        "Content-Type": "application/json"
+                        "Authorization": "Bearer " + token
                     }
                 });
-    
+
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("Dados do Tatu:", data);
-                    // Aqui você pode exibir os dados ou usá-los no seu código
+                    alert("Dados dos tatus: " + JSON.stringify(data));
                 } else {
-                    console.log("Erro ao buscar tatu.");
+                    alert("Erro ao obter dados dos tatus.");
                 }
             } catch (error) {
-                console.log("Erro de conexão: " + error.message);
+                alert("Erro de conexão: " + error.message);
             }
         });
     } else {
