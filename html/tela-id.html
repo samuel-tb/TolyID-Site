@@ -21,14 +21,20 @@
     </header>
 
     <!-- Conteúdo principal da página -->
-    <main>
-        <br>
-        <h2>Bem-vindo ao sistema TolyID</h2>
-        <br>
-        <p class="aviso">Clique no botão abaixo para cadastrar um novo animal!</p>
-        <br>
-        <button id="openCadastroBtn">Cadastrar</button>
-    </main>
+
+    <!-- Modal Bem vindo-->
+     <div id="Bemvindo_Id" class="Modal_BemVindo">
+        <div class="modal-content">
+            <h2 class="CabBemvindo">Bem-vindo ao sistema TolyID</h2>
+            <div class="input-container">
+            <br>
+            <p class="informacao">Clique no botão de + na parte superior para cadastrar um novo animal!</p>
+            </div>
+            <div class="Botoes">
+                <button id='Fechar' class="Btn_Fechar">Fechar</button>
+            </div>
+        </div>
+     </div>
 
     <!-- Modal (oculto por padrão) -->
     <div id="animalModal" class="modal">
