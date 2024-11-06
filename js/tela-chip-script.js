@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    alert(localStorage.getItem('IdDigitado'))
+    
     // Obtém o modal
     var modal = document.getElementById('microchipModal');
 
