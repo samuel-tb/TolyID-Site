@@ -1,44 +1,38 @@
-
-alert(localStorage.getItem("Token"));
-
 document.addEventListener('DOMContentLoaded', function () {
- //#region Função para o modal bem vindo 
-    // Seleciona o modal
+
+    const IdAnimais = [];
+    var registroAnimais = document.getElementById('registroAnimais');
+
+    //#region Função para o modal de boas-vindas
     const newmodal = document.getElementById("Bemvindo_Id");
 
-    // Função para abrir o modal
     function openModal() {
         newmodal.style.display = "block";
     }
 
-    // Função para fechar o modal
     function closeModal() {
         newmodal.style.display = "none";
     }
 
-    // Exibe o modal ao carregar a página
     openModal();
 
-    // Fecha o modal ao clicar no 'x' ou no botão 'Cancelar'
     document.querySelector(".Btn_Fechar").addEventListener("click", closeModal);
-    
-    // Fecha o modal ao clicar fora da área de conteúdo
+
     window.addEventListener("click", function (event) {
-        if (event.target === modal) {
+        if (event.target === newmodal) {
             closeModal();
         }
     });
-//#region 
- 
+    //#endregion
 
-    var btnFechar = document.getElementById('Fechar');
-   //#region Requisição Get da lista de Tatus por Id
+    var btnFechar = document.getElementById('FecharModal');
+    
+    //#region Requisição Get da lista de tatus
     if (btnFechar) {
         btnFechar.addEventListener('click', async (event) => {
-            event.preventDefault(); // Essa linha é útil se o botão estiver dentro de um formulário.
-            
-            let token = localStorage.getItem('Token');
+            event.preventDefault();
 
+            let token = localStorage.getItem('Token');
             if (!token) {
                 alert("Por favor, faça login primeiro.");
                 return;
@@ -54,7 +48,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (response.ok) {
                     const data = await response.json();
-                    alert("Dados dos tatus: " + JSON.stringify(data));
+                    
+                    // Preenche o array IdAnimais com os IDs dos animais
+                    data.content.forEach(content => {
+                        IdAnimais.push(content.identificacaoAnimal);
+                    });
+
+                    // Atualiza a lista de animais cadastrados
+                    atualizarListaAnimais(IdAnimais);
+
                 } else {
                     alert("Erro ao obter dados dos tatus.");
                 }
@@ -67,19 +69,41 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     //#endregion
 
-   
-    // Obtém o modal
-    var modal = document.getElementById('animalModal');
-    
- 
-    // Obtém os botões que abrem o modal
-    var addAnimalBtn = document.getElementById('addAnimalBtn');
-    var openCadastroBtn = document.getElementById('openCadastroBtn'); // Novo botão
+    // Função para atualizar a lista de animais cadastrados na página
+    function atualizarListaAnimais(IdAnimais) {
+        if (IdAnimais.length === 0) {
+            console.log("Nenhum animal no sistema");
+            return;
+        }
 
-    // Obtém o elemento <span> que fecha o modal
+        var listaAnimais = document.getElementById('listaAnimais');
+        
+        
+        IdAnimais.forEach(IdAnimal => {
+            console.log(1);
+            var animalItem = document.createElement('hr');
+            animalItem.className = 'animal-item';
+
+            animalItem.innerHTML = `
+                <img src="../img/tatu.jpg" alt="Foto do Tatu">
+                <p><a href="../html/tela-chip.html?id=${IdAnimal}" class="animal-link">ID: ${IdAnimal}</a></p>
+            `;
+
+            listaAnimais.appendChild(animalItem);
+        });
+    
+        listaAnimais.style.display = "block";
+        registroAnimais.style.display = "block";
+
+        alert("Lista de animais atualizada com sucesso!");
+    }
+
+    //#region Configurações para Cadastrar o Identificador do tatu
+    var modal = document.getElementById('animalModal');
+    var addAnimalBtn = document.getElementById('addAnimalBtn');
+    var openCadastroBtn = document.getElementById('openCadastroBtn');
     var closeBtn = document.querySelector('.close');
 
-    // Quando o botão de cadastrar animal ou novo botão for clicado, abre o modal
     if (addAnimalBtn) {
         addAnimalBtn.addEventListener('click', function () {
             modal.style.display = 'block';
@@ -88,19 +112,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (openCadastroBtn) {
         openCadastroBtn.addEventListener('click', function () {
-            modal.style.display = 'block'; // Reutiliza o modal de identificação de animal
+            modal.style.display = 'block';
         });
     }
 
-
-    // Quando o usuário clicar no <span> (x), fecha o modal
     if (closeBtn) {
         closeBtn.addEventListener('click', function () {
             modal.style.display = 'none';
         });
     }
 
-    // Lógica para o botão "Cancelar"
     var cancelBtn = document.querySelector('.btn.cancel');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', function () {
@@ -108,27 +129,53 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Lógica para o botão "Adicionar"
     var addBtn = document.querySelector('.btn.add');
     if (addBtn) {
         addBtn.addEventListener('click', function () {
             var animalId = document.getElementById('animalId').value.trim();
 
-            // Verifica se o campo de ID está vazio
             if (!animalId) {
                 var errorMessage = document.createElement('p');
                 errorMessage.style.color = 'red';
                 errorMessage.innerText = "Por favor, insira a identificação do animal.";
                 document.querySelector('.modal-content').appendChild(errorMessage);
 
-                // Remove a mensagem após um tempo
                 setTimeout(function () {
                     errorMessage.remove();
                 }, 3000);
                 return;
             }
 
-            // Aqui você continua com sua lógica...
+            idsCadastrados.push(animalId);
+
+            
+            registroAnimais.style.display = 'block';
+
+            var listaAnimais = document.getElementById('listaAnimais');
+            var animalItem = document.createElement('div');
+            animalItem.className = 'animal-item';
+
+            animalItem.innerHTML = `
+                <img src="../img/tatu.jpg" alt="Foto do Tatu">
+                <p><a href="../html/tela-chip.html?id=${animalId}" class="animal-link">ID: ${animalId}</a></p>
+            `;
+
+            listaAnimais.appendChild(animalItem);
+
+            document.getElementById('animalId').value = '';
+
+            var successMessage = document.createElement('p');
+            successMessage.style.color = 'green';
+            successMessage.innerText = "ID cadastrado com sucesso!";
+            document.querySelector('.modal-content').appendChild(successMessage);
+
+            setTimeout(function () {
+                successMessage.remove();
+                modal.style.display = 'none';
+            }, 3000);
+            
+            localStorage.setItem('AnimalID', animalId);
         });
     }
+    //#endregion
 });
