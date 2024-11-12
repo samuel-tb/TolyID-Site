@@ -67,6 +67,17 @@ header img {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.Modal_BemvindoChip {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 /* Estilos do conteúdo do modal */
 .modal-content {
     background-color: white;
@@ -168,6 +179,52 @@ header img {
     padding: 5px;           /* Um pouco de espaçamento interno no hover */
     border-radius: 5px;     /* Bordas arredondadas no hover */
 }
+
+
+.registroCapturas {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.registroCapturas h2{
+    margin-bottom: 20px;
+}
+
+.NavbarCapturas {
+    display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.captura-item {
+    display: flex;
+    align-items: center;
+    background-color: #9dccfc; /* Cor de fundo dos itens */
+    margin-bottom: 10px; /* Espaço entre os itens */
+    padding: 10px;
+    border-radius: 8px; /* Arredondando os cantos para deixar mais suave */
+}
+
+.captura-item p {
+    font-size: 16px;
+    color: #333;
+}
+
+.captura-link {
+    text-decoration: none;  /* Remove a linha embaixo do link */
+    color: #007bff;         /* Define a cor padrão do link */
+    font-weight: bold;      /* Deixa o texto em negrito */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para hover */
+}
+
+.microchip-link:hover {
+    color: white;           /* Muda a cor do texto ao passar o mouse */
+    background-color: #007bff; /* Adiciona um fundo azul no hover */
+    padding: 5px;           /* Um pouco de espaçamento interno no hover */
+    border-radius: 5px;     /* Bordas arredondadas no hover */
+}
+
 
 
 #footer {

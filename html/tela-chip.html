@@ -20,15 +20,23 @@
         <a href="#" id="microchipIcon"><img src="../img/chip.png" alt="Microchip" style="width: 50px; height: 50px;"></a>
     </header>
 
-    <!-- Conteúdo principal da página -->
-    <main>
+
+   <!-- Modal Bem vindo-->
+   <div id="Bemvindo_chip" class="Modal_BemvindoChip">
+    <div class="modal-content">
+        <h2 class="CabBemvindo">Bem-vindo ao cadastro do microchip</h2>
+        <div class="input-container">
         <br>
-        <h2>Bem-vindo ao cadastro do microchip</h2>
-        <br>
-        <p class="aviso">Clique abaixo para cadastrar um novo microchip!</p>
-        <br>
-        <button id="openCadastroBtn">Cadastrar Microchip</button>
-    </main>
+        <p class="informacao">Clique no chip na parte superior para cadastrar o chip do tatu!</p>
+        </div>
+        <div class="Botoes">
+            <button id='FecharModal' class="Btn_Fechar">Fechar</button>
+        </div>
+    </div>
+ </div>
+
+
+ 
 
     <!-- Modal (oculto por padrão) -->
     <div id="microchipModal" class="modal">
@@ -36,12 +44,12 @@
             <span class="close">&times;</span>
             <h2 class="CabId">Cadastro de Microchip</h2>
             <div class="input-container">
-                <label for="microchipId">Digite o número do microchip:</label>
-                <input type="text" id="microchipId" class="input-field">
+                <label for="MicrochipId">Digite o número do microchip:</label>
+                <input type="number" id="microchipId" class="input-field">
             </div>
             <div class="buttons">
                 <button class="btn cancel">Cancelar</button>
-                <button class="btn add">Adicionar</button>
+                <button class="btnadd">Adicionar</button>
             </div>
         </div>
     </div>
@@ -49,7 +57,18 @@
     <!-- Área onde os registros dos microchips serão exibidos -->
     <div id="registroMicrochips" style="display:none;">
         <h2>Microchips Cadastrados:</h2>
-        <div id="listaMicrochips"></div> <!-- Lista onde os microchips serão mostrados -->
+        <div id="listaMicrochips"></div> 
+        <!-- Lista onde os microchips serão mostrados -->
+    </div>
+    </div>
+
+    <div id="registroCapturas" style="display:none;">
+        <h2>Capturas Cadastradas:</h2>
+        <nav class="NavbarCapturas">
+        <div id="listaCapturas"></div> 
+        <!-- Lista onde os microchips serão mostrados -->
+    </nav>
+    </div>
     </div>
 
     <footer id="footer">

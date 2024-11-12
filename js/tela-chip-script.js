@@ -1,20 +1,103 @@
 document.addEventListener('DOMContentLoaded', function () {
-    alert(localStorage.getItem('IdDigitado'))
+    var chip;
+    var IdApi;
+    const link = window.location.href;
+    let token = localStorage.getItem('Token');
+    var listaMicrochips = document.getElementById('listaMicrochips');
+
+    //#region RECUPERAÇÃO DE DADOS DA PÁGINA ANTERIOR
+    const IdDigitado = localStorage.getItem('IdDigitado');
+    console.log(IdDigitado);
+    // Array com os microchips da API
+    const ChipAnimais = [];
     
+    const ChipsApi = JSON.parse(localStorage.getItem("ChipAnimais"));
+    ChipsApi.forEach(chip => { 
+        ChipAnimais.push(chip);
+    });
+    console.log(ChipAnimais);
+    //#endregion
+
+    // Extrai o parâmetro 'id' da URL do link
+    const url = new URL(link);
+    const IdPagina = url.searchParams.get('id');
+    localStorage.setItem('IdPagina', IdPagina);
+
+    //#region O modal de boas-vindas
+    const Newmodal = document.getElementById("Bemvindo_chip"); // Certifique-se que o ID corresponde exatamente ao HTML
+
+    // Verifique se o elemento foi encontrado
+    console.log("Newmodal:", Newmodal);
+
+    function openModal() {
+        if (Newmodal) Newmodal.style.display = "block";
+    }
+
+    function closeModal() {
+        if (Newmodal) Newmodal.style.display = "none";
+    }
+
+    openModal();
+
+    document.querySelector(".Btn_Fechar")?.addEventListener("click", closeModal);
+
+    window.addEventListener("click", function (event) {
+        if (event.target === Newmodal) {
+            closeModal();
+        }
+    });
+    //#endregion
+
+    var listaMicrochips = document.getElementById('listaMicrochips');
+    var registroMicrochips = document.getElementById('registroMicrochips');
+    var btnFechar = document.getElementById('FecharModal');
+    
+    //#region Requisição GET da lista de microchip do tatu
+    if (btnFechar) {
+        btnFechar.addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            if (!token) {
+                alert("Por favor, faça login primeiro.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8080/tatus/listar/${IdPagina}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    IdApi = data.id;
+                    chip = data.numeroMicrochip;
+                    alert(IdApi);
+                    localStorage.setItem('IdApi', IdApi);
+                    ListaMicrochipApi(IdPagina, chip);
+                } else {
+                    alert("Erro ao obter dados dos tatus.");
+                }
+            } catch (error) {
+                alert("Erro de conexão: " + error.message);
+            }
+        });
+    } else {
+        console.error('Elemento #FecharModal não encontrado.');
+    }
+    //#endregion
+
+    //#region PARTE DO DESIGN E FUNÇÕES ANTES
     // Obtém o modal
     var modal = document.getElementById('microchipModal');
 
-    // Obtém o botão de cadastro e o ícone de microchip
-    var openCadastroBtn = document.getElementById('openCadastroBtn');
+    // Obtém o ícone de microchip
     var microchipIcon = document.getElementById('microchipIcon');
 
     // Obtém o elemento <span> que fecha o modal
     var closeBtn = document.querySelector('.close');
-
-    // Quando o botão de cadastrar ou o ícone de microchip for clicado, abre o modal
-    openCadastroBtn.addEventListener('click', function () {
-        modal.style.display = 'block';
-    });
 
     microchipIcon.addEventListener('click', function (event) {
         event.preventDefault(); // Previne a navegação padrão
@@ -39,108 +122,118 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.style.display = 'none';
     });
 
-    // Array para armazenar os microchips cadastrados
-    var chipsCadastrados = [];
-
     // Lógica para o botão "Adicionar"
-    var addBtn = document.querySelector('.btn.add');
-    addBtn.addEventListener('click', function () {
-        var microchipId = document.getElementById('microchipId').value.trim();
+    var addBtn = document.querySelector('.btnadd');
+    if (addBtn) {
+        addBtn.addEventListener('click', async function () {
+            let microchipId = document.getElementById('microchipId').value;
 
-        // Verifica se o campo de ID está vazio
-        if (!microchipId) {
-            var errorMessage = document.createElement('p');
-            errorMessage.style.color = 'red';
-            errorMessage.innerText = "Por favor, insira o número do microchip.";
-            document.querySelector('.modal-content').appendChild(errorMessage);
+            // Verifica se o campo está vazio
+            if (!microchipId || microchipId.trim() === '') {
+                console.error("Campo do microchip do animal está vazio.");
+                alert("Por favor, insira o Microchip do animal.");
+                return;
+            }
 
-            // Remove a mensagem após um tempo
-            setTimeout(function () {
-                errorMessage.remove();
-            }, 3000);
-            return;
-        }
+            // Verifica se o ID já está cadastrado
+            if (ChipAnimais.includes(microchipId)) {
+                console.warn("Microchip duplicada.");
+                alert("Já existe um tatu com esse microchip.");
+                return;
+            }
 
-        // Verifica se o microchip já foi cadastrado
-        if (chipsCadastrados.includes(microchipId)) {
-            var errorMessage = document.createElement('p');
-            errorMessage.style.color = 'red';
-            errorMessage.innerText = "Esse microchip já foi cadastrado!";
-            document.querySelector('.modal-content').appendChild(errorMessage);
-
-            // Remove a mensagem após um tempo
-            setTimeout(function () {
-                errorMessage.remove();
-            }, 3000);
+            if(listaMicrochips.childElementCount > 0){
+                console.warn("Tatu já possui Microchip.");
+                alert("Já existe um microchip nesse tatu.");
+                return;
+            }
             
+            
+            if (!token) {
+                alert("Por favor, faça login primeiro.");
+                return;
+            }
+                IdString = String(IdDigitado);
+                microchipInt = parseInt(microchipId);
+                
+            try {
+                // Envia a requisição do cadastro do tatu
+                const response = await fetch('http://localhost:8080/tatus/cadastrar', {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        identificacaoAnimal: IdString, numeroMicrochip: microchipInt}),
+                });
+    
+                // Processa a resposta
+                if (response.ok) {
+                    const data = await response.json();
+                } else {
+                    const errorData = await response.json();
+                    console.error("Erro do servidor:", errorData);
+                    document.querySelector(".mensagem-cadastro").innerHTML = "Número inválido. Por favor, tente novamente.";
+                }
+            } catch (error) {
+                console.log("Erro de conexão: " + error.message);
+            }
+           
+
+            // Adiciona o ID ao array e exibe o registro
+            registroMicrochips.style.display = 'block';
+
+            // Cria o novo item para a lista de microchips
+            var microchipItem = document.createElement('div');
+            microchipItem.className = 'microchip-item';
+            microchipItem.innerHTML = `
+                <img src="../img/tatu-2.jpg" alt="Foto do Tatu">
+                <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="microchip-link">Microchip: ${microchipId}</a></p>
+            `;
+            listaMicrochips.appendChild(microchipItem);
+
+            // Limpa o campo de entrada
+            document.getElementById('microchipId').value = '';
+
+            // Exibe a mensagem de sucesso no modal de cadastro
+            var successMessage = document.createElement('p');
+            successMessage.style.color = 'green';
+            successMessage.innerText = "Microchip cadastrado com sucesso!";
+            document.querySelector('.modal-content').appendChild(successMessage);
+
+            // Remove a mensagem após um tempo e fecha o modal
+            setTimeout(function () {
+                successMessage.remove();
+                modal.style.display = 'none';
+            }, 3000);
+
+            ChipAnimais.push(microchipId);
+        
+        });
+    }
+    //#endregion
+
+    //#region FUNÇÕES
+    // Modelo para resposta da API se tiver chip
+    function ListaMicrochipApi(IdPagina, chip) {
+        if (ChipAnimais.length === 0) {
+            console.log("Nenhum animal no sistema");
             return;
         }
 
-        // Se o microchip não estiver cadastrado, adiciona ao array e na lista
-        chipsCadastrados.push(microchipId);
-
-        // Exibe a área de registros se ainda estiver oculta
-        var registroMicrochips = document.getElementById('registroMicrochips');
-        registroMicrochips.style.display = 'block';
-
-        // Adiciona o novo microchip à lista
-        var listaMicrochips = document.getElementById('listaMicrochips');
-        var microchipItem = document.createElement('div');
+        
+        var microchipItem = document.createElement('hr');
         microchipItem.className = 'microchip-item';
 
-        // Cria o HTML para o novo microchip com um link clicável
         microchipItem.innerHTML = `
-            <img src="../img/tatu-2.jpg" alt="Tatu">
-            <p><a href="../html/cadastro-geral.html?id=${microchipId}" class="microchip-link">Microchip: ${microchipId}</a></p>
+            <img src="../img/tatu-2.jpg" alt="Foto do Tatu">
+            <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="microchip-link">Microchip: ${chip}</a></p>
         `;
 
-        // Adiciona o novo item à lista de microchips
         listaMicrochips.appendChild(microchipItem);
-
-        // Limpa o campo de entrada
-        document.getElementById('microchipId').value = '';
-
-        // Exibe a mensagem de sucesso no modal de cadastro
-        var successMessage = document.createElement('p');
-        successMessage.style.color = 'green';
-        successMessage.innerText = "Microchip cadastrado com sucesso!";
-        document.querySelector('.modal-content').appendChild(successMessage);
-
-        // Remove a mensagem após um tempo e fecha o modal
-        setTimeout(function () {
-            successMessage.remove();
-            modal.style.display = 'none'; // Fecha o modal após adicionar
-        }, 3000);
-
-        //#region Função para jogar o Cadastro do Tatu na API
-function Cadastro_Api(){
-    const url = 'http://localhost:8080/tatus/cadastrar';
-
-// Dados que você quer enviar no corpo da requisição
-const dados = {
-   identificacaoAnimal: localStorage.getItem('NumeroId'),
-   numeroMicrochip: microchipId,
-};
-
-// Fazendo a requisição POST com fetch
-fetch(url, {
-   method: 'POST', // Método HTTP
-   headers: {
-       'Content-Type': 'application/json', // Define o tipo de conteúdo como JSON
-       'Authorization': `Bearer ${localStorage.getItem('Autenticacao')}`
-   },
-   body: JSON.stringify(dados) // Converte os dados para uma string JSON
-})
-.then(response => response.json()) // Converte a resposta para JSON
-.then(data => {
-   console.log('Sucesso:', data); // Manipula a resposta da API
-})
-.catch((error) => {
-   console.error('Erro:', error); // Lida com possíveis erros
+        listaMicrochips.style.display = "block";
+        registroMicrochips.style.display = "block";
+    }
+    //#endregion
 });
-   }
-   //#endregion
-    });
-
-
-}); 

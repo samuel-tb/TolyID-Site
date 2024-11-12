@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     const IdAnimais = [];
+    const ChipAnimais = [];
     var registroAnimais = document.getElementById('registroAnimais');
 
-    //#region Função para o modal de boas-vindas
+    //#region O modal de boas-vindas
     const newmodal = document.getElementById("Bemvindo_Id");
 
     function openModal() {
@@ -49,13 +49,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.ok) {
                     const data = await response.json();
                     
-                    // Preenche o array IdAnimais com os IDs dos animais
+                    // Preenche o array IdAnimais com os IDs e o array ChipAnimais com os Chip
                     data.content.forEach(content => {
-                        IdAnimais.push(content.identificacaoAnimal);
+                        IdAnimais.push(content.identificacaoAnimal) && 
+                        ChipAnimais.push(content.numeroMicrochip);
                     });
+                    localStorage.setItem("ChipAnimais", JSON.stringify(ChipAnimais));
 
                     // Atualiza a lista de animais cadastrados
-                    atualizarListaAnimais(IdAnimais);
+                    ListaAnimaisApi(IdAnimais);
 
                 } else {
                     alert("Erro ao obter dados dos tatus.");
@@ -70,33 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //#endregion
 
     // Função para atualizar a lista de animais cadastrados na página
-    function atualizarListaAnimais(IdAnimais) {
-        if (IdAnimais.length === 0) {
-            console.log("Nenhum animal no sistema");
-            return;
-        }
-
-        var listaAnimais = document.getElementById('listaAnimais');
-        
-        
-        IdAnimais.forEach(IdAnimal => {
-            console.log(1);
-            var animalItem = document.createElement('hr');
-            animalItem.className = 'animal-item';
-
-            animalItem.innerHTML = `
-                <img src="../img/tatu.jpg" alt="Foto do Tatu">
-                <p><a href="../html/tela-chip.html?id=${IdAnimal}" class="animal-link">ID: ${IdAnimal}</a></p>
-            `;
-
-            listaAnimais.appendChild(animalItem);
-        });
-    
-        listaAnimais.style.display = "block";
-        registroAnimais.style.display = "block";
-
-        alert("Lista de animais atualizada com sucesso!");
-    }
+   
         // Variáveis principais para o modal e botões
         var modal = document.getElementById('animalModal');
         var registroAnimais = document.getElementById('registroAnimais');
@@ -115,168 +91,108 @@ document.addEventListener('DOMContentLoaded', function () {
                 modal.style.display = 'block'; // Abre o modal
             });
         }
-      //AQUIIIIIIIIII ------
-        // Função de adicionar animal com verificação de execução
-        if (addBtn) {
-            addBtn.addEventListener('click', function () {
-                console.log("Botão 'Adicionar' clicado"); // Log de início da função
-    
-                let IdDigitado = document.querySelector('input[placeholder="Animal"]').value; // Pega o valor do campo
-    
-                console.log("Valor digitado:", IdDigitado); // Exibe o valor digitado no console
-    
-                // Verifica se o campo está vazio
-                if (!IdDigitado || IdDigitado.trim() === '') {
-                    console.error("Campo de identificação do animal está vazio.");
-                    alert("Por favor, insira a identificação do animal.");
-                    return;
-                }
-    
-                console.log(`Valor digitado após trim(): "${IdDigitado.trim()}"`);
-    
-                // Verifica se o ID já está cadastrado
-                if (IdAnimais.includes(IdDigitado)) {
-                    console.warn("Identificação duplicada.");
-                    alert("Já existe um tatu com essa Identificação.");
-                    return;
-                }
-    
-                // Adiciona o ID ao array e exibe o registro
-                IdAnimais.push(IdDigitado);
-                registroAnimais.style.display = 'block';
-    
-                var animalItem = document.createElement('div');
-                animalItem.className = 'animal-item';
-                animalItem.innerHTML = `
-                    <img src="../img/tatu.jpg" alt="Foto do Tatu">
-                    <p><a href="../html/tela-chip.html?id=${IdDigitado}" class="animal-link">ID: ${IdDigitado}</a></p>
-                `;
-    
-                listaAnimais.appendChild(animalItem);
-    
-                // Limpa o campo de entrada e fecha o modal
-                document.getElementById('Idanimal_digitado').value = '';
-                alert("ID cadastrado com sucesso!");
-                modal.style.display = 'none';
-    
-                // Armazena o ID no localStorage
-                localStorage.setItem('IdDigitado', IdDigitado);
-            });
-        } else {
-            console.warn("Botão 'Adicionar' não encontrado. Verifique o HTML.");
-        }
-    
-        // Eventos de fechamento do modal
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function () {
-                modal.style.display = 'none'; // Fecha o modal
-            });
-        }
-    
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', function () {
-                modal.style.display = 'none'; // Fecha o modal
-            });
-        }    
-    
 
-/*
-    // Variáveis principais para o modal e botões
-    var modal = document.getElementById('animalModal');
-    var registroAnimais = document.getElementById('registroAnimais');
-    var listaAnimais = document.getElementById('listaAnimais');
-
-    // Botões para abrir e fechar o modal
-    var addAnimalBtn = document.getElementById('addAnimalBtn');
-    var closeBtn = document.querySelector('.close');
-    var cancelBtn = document.querySelector('.btn.cancel');
-    var addBtn = document.querySelector('.btn.add'); // Botão "Adicionar"
-
-    // Abrir o modal quando qualquer botão de abertura for clicado
-    if (addAnimalBtn) {
-        addAnimalBtn.addEventListener('click', function () {
-            modal.style.display = 'block';
-        });
+      
+    // Quando o usuário clicar no <span> (x), fecha o modal
+    if(closeBtn){
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
     }
 
-
-    // Fechar o modal quando o botão "close" ou "cancelar" for clicado
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function () {
+    // Quando o usuário clicar fora do modal, fecha o modal
+    window.addEventListener('click', function (event) {
+        if (event.target == modal) {
             modal.style.display = 'none';
-        });
-    }
+        }
+    });
 
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', function () {
-            modal.style.display = 'none';
-        });
-    }
+    // Lógica para o botão "Cancelar"
+    cancelBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
 
-    // Função de adicionar animal
+    // Lógica para o botão "Adicionar"
     if (addBtn) {
         addBtn.addEventListener('click', function () {
-            var IdDigitado = document.getElementById('Idanimal_digitado').value.trim();
+             var animalId = document.getElementById('animalId').value;
+             localStorage.setItem('IdDigitado', animalId);
 
-            // Verifica se o campo de entrada está vazio
-            if (!IdDigitado) {
-                var errorMessage = document.createElement('p');
-                errorMessage.style.color = 'red';
-                errorMessage.innerText = "Por favor, insira a identificação do animal.";
-                document.querySelector('.modal-content').appendChild(errorMessage);
-
-                setTimeout(function () {
-                    errorMessage.remove();
-                }, 3000);
+            // Verifica se o campo está vazio
+            if (!animalId || animalId.trim() === '') {
+                console.error("Campo de identificação do animal está vazio.");
+                alert("Por favor, insira a Identificação do animal.");
                 return;
             }
 
             // Verifica se o ID já está cadastrado
-            if (IdAnimais.includes(IdDigitado)) {
-                var duplicateMessage = document.createElement('p');
-                duplicateMessage.style.color = 'red';
-                duplicateMessage.innerText = "Já tem um tatu com essa Identificação.";
-                document.querySelector('.modal-content').appendChild(duplicateMessage);
-
-                setTimeout(function () {
-                    duplicateMessage.remove();
-                }, 3000);
+            if (IdAnimais.includes(animalId)) {
+                console.warn("Identificação duplicada.");
+                alert("Já existe um tatu com essa Identificação.");
                 return;
             }
-
+            alert("Passamos dos parametros");
             // Adiciona o ID ao array e exibe o registro
-            IdAnimais.push(IdDigitado);
             registroAnimais.style.display = 'block';
-
+            alert("Deu block no registro")
+            // Cria o novo item para a lista de microchips
             var animalItem = document.createElement('div');
             animalItem.className = 'animal-item';
             animalItem.innerHTML = `
-            <img src="../img/tatu.jpg" alt="Foto do Tatu">
-            <p><a href="../html/tela-chip.html?id=${IdDigitado}" class="animal-link">ID: ${IdDigitado}</a></p>
-        `;
-
+                <img src="../img/tatu.jpg" alt="Foto do Tatu">
+                <p><a href="../html/tela-chip.html?id=${animalId}" class="animal-link">ID: ${animalId}</a></p>
+            `;
+            alert("Criou o elemento");
             listaAnimais.appendChild(animalItem);
 
-            // Limpa o campo de entrada e exibe uma mensagem de sucesso
-            document.getElementById('Idanimal_digitado').value = '';
+            // Limpa o campo de entrada
+            document.getElementById('animalId').value = '';
+
+            // Exibe a mensagem de sucesso no modal de cadastro
             var successMessage = document.createElement('p');
             successMessage.style.color = 'green';
-            successMessage.innerText = "ID cadastrado com sucesso!";
+            successMessage.innerText = "Microchip cadastrado com sucesso!";
             document.querySelector('.modal-content').appendChild(successMessage);
 
+            // Remove a mensagem após um tempo e fecha o modal
             setTimeout(function () {
                 successMessage.remove();
                 modal.style.display = 'none';
             }, 3000);
 
-            // Armazena o ID no localStorage
-            localStorage.setItem('IdDigitado', IdDigitado);
+            IdAnimais.push(animalId);
+        
         });
-    } else {
-        console.warn("Botão de adicionar não encontrado. Verifique se existe um botão com a classe '.btn.add' no HTML.");
     }
-*/
-
+        
+        //#region FUNÇÕES
+        // Função que cria os model para os valores que recebe da API
+        function ListaAnimaisApi(IdAnimais) {
+            if (IdAnimais.length === 0) {
+                console.log("Nenhum animal no sistema");
+                return;
+            }
     
-    //#endregion
+            var listaAnimais = document.getElementById('listaAnimais');
+            
+            
+            IdAnimais.forEach(IdAnimal => {
+                var animalItem = document.createElement('hr');
+                animalItem.className = 'animal-item';
+    
+                animalItem.innerHTML = `
+                    <img src="../img/tatu.jpg" alt="Foto do Tatu">
+                    <p><a href="../html/tela-chip.html?id=${IdAnimal}" class="animal-link">ID: ${IdAnimal}</a></p>
+                `;
+    
+                listaAnimais.appendChild(animalItem);
+            });
+        
+            listaAnimais.style.display = "block";
+            registroAnimais.style.display = "block";
+    
+        }
+
+        //#endregion
+
 });
