@@ -114,6 +114,11 @@ input, textarea {
     font-size: 18px;
 }
 
+#Btn_SalvarParametros {
+    display: flex;
+    justify-content: flex-end;
+}
+
 button:hover {
     background-color: #0056b3;
 }

@@ -1,8 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
     var chip;
     var IdApi;
+    var AnimaisCaptura = [];
+    var DatasCaptura = [];
+    var HorasCaptura = []
     const link = window.location.href;
     let token = localStorage.getItem('Token');
+
+    localStorage.setItem('registroCapturas', document.getElementById('registroMicrochips').innerText);
+
+    localStorage.setItem('listaCapturas', document.getElementById('listaCapturas').innerText);
+
+    const registroCapturas = document.getElementById('registroCapturas');
+    const listaCapturas = document.getElementById('listaCapturas');
+
+
     var listaMicrochips = document.getElementById('listaMicrochips');
 
     //#region RECUPERAÇÃO DE DADOS DA PÁGINA ANTERIOR
@@ -61,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("Por favor, faça login primeiro.");
                 return;
             }
-
+            //#region Requisição Get para os Chips cadastrados
             try {
                 const response = await fetch(`http://localhost:8080/tatus/listar/${IdPagina}`, {
                     method: "GET",
@@ -74,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     const data = await response.json();
                     IdApi = data.id;
                     chip = data.numeroMicrochip;
-                    alert(IdApi);
                     localStorage.setItem('IdApi', IdApi);
                     ListaMicrochipApi(IdPagina, chip);
                 } else {
@@ -83,6 +94,38 @@ document.addEventListener('DOMContentLoaded', function () {
             } catch (error) {
                 alert("Erro de conexão: " + error.message);
             }
+            //#endregion
+
+            //#region Requisição para as capturas cadastradas
+            try{
+                const response = await fetch(`http://localhost:8080/capturas/listar`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    data.content.forEach(content =>{
+                      AnimaisCaptura.push(content.Id);
+                      if(content.tatu.identificacaoAnimal == IdPagina) {
+                      var [datacaptura, horacaptura] = content.dadosGerais.dataCaptura.split('T');
+                      DatasCaptura.push(datacaptura);
+                      HorasCaptura.push(horacaptura);
+                      }
+                    });
+                    for(let i = 0 ; i< DatasCaptura.length; i++){
+                    ListaCapturasApi(DatasCaptura[i], HorasCaptura[i]);
+                    }
+                    
+                } else {
+                    alert("Erro ao obter dados dos tatus.");
+                }
+            } catch (error) {
+                alert("Erro de conexão: " + error.message);
+            }
+
         });
     } else {
         console.error('Elemento #FecharModal não encontrado.');
@@ -235,5 +278,27 @@ document.addEventListener('DOMContentLoaded', function () {
         listaMicrochips.style.display = "block";
         registroMicrochips.style.display = "block";
     }
+
+    function ListaCapturasApi(DatasCaptura, HorasCaptura) {
+        if (AnimaisCaptura.length === 0) {
+            console.log("Nenhuma captura no sistema");
+            return;
+        }
+
+        var capturaItem = document.createElement('hr');
+        capturaItem.className = 'captura-item';
+
+        capturaItem.innerHTML = `
+             <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="captura-link">Data da Captura: ${DatasCaptura}</a></p>
+                <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="captura-link">Hora da Captura: ${HorasCaptura}</a></p>
+            `;
+
+
+        listaCapturas.appendChild(capturaItem);
+        listaCapturas.style.display = "block";
+        registroCapturas.style.display = "block";
+    }
+
     //#endregion
+
 });
