@@ -1,97 +1,110 @@
-.login-container{
+/* Estilos gerais para o container de login */
+.login-container {
     margin-top: 12%;
     margin-bottom: 5%;
 }
-.cadastro-container{
+
+/* Estilo para o campo de senha e ícone */
+.form-group {
+    position: relative;
+    text-align: center;
+}
+
+#inputsenha {
+    padding-right: 35px; /* Espaço extra à direita para o ícone */
+}
+
+/* Ícone do olho dentro do campo de senha */
+#btn-senha {
+    position: absolute;
+    right: 10px; /* Distância do ícone para a borda direita do input */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #666; /* Cor do ícone */
+}
+
+/* Outros estilos do layout */
+.cadastro-container {
     margin-top: 7%;
     margin-bottom: 5%;
 }
-.login-form-1{
-    padding: 9%;
-    background:#1c44a0;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-}
-.login-form-1 h3{
-    text-align: center;
-    color:#fff;
-}
-.login-name{
-    margin-top: 7%;
-    margin-bottom:12%;
-}
-.login-form-2{
-    padding: 9%;
-    background:#9dccfc;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-}
-.login-form-2 h3{
-    text-align: center;
-    margin-bottom:12%;
-    margin-top:20%;
-    color: #fff;
-    
-}
-.login-form-2 p{
-    text-align: center;
-    color: #fff;
-}
-.login-form-cadastro{
+
+.login-form-1 {
     padding: 9%;
     background: #1c44a0;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-    
-}
-.login-form-cadastro h3{
-    text-align: center;
-    margin-bottom:6%;
-    color:#fff;
 }
 
-.btnSubmit{
+.login-form-1 h3 {
+    text-align: center;
+    color: #fff;
+}
+
+.login-name {
+    margin-top: 7%;
+    margin-bottom: 12%;
+}
+
+.login-form-2 {
+    padding: 9%;
+    background: #9dccfc;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-2 h3 {
+    text-align: center;
+    margin-bottom: 12%;
+    margin-top: 20%;
+    color: #fff;
+}
+
+.login-form-2 p {
+    text-align: center;
+    color: #fff;
+}
+
+.login-form-cadastro {
+    padding: 9%;
+    background: #1c44a0;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-cadastro h3 {
+    text-align: center;
+    margin-bottom: 6%;
+    color: #fff;
+}
+
+.btnSubmit {
     font-weight: 600;
     width: 50%;
     color: #282726;
     background-color: #fff;
     border: none;
     border-radius: 1.5rem;
-    padding:2%;
+    padding: 2%;
     margin-top: 5%;
 }
-.btnForgetPwd{
+
+.btnForgetPwd {
     color: #fff;
     font-weight: 600;
     text-decoration: none;
 }
-.btnForgetPwd:hover{
-    text-decoration:underline;
-    color:#fff;
+
+.btnForgetPwd:hover {
+    text-decoration: underline;
+    color: #fff;
 }
 
-.form-group{
-    text-align: center;
-   
-}
-
-.form-group-cadastro{
+.form-group-cadastro {
     margin-left: 20%;
     margin-right: 20%;
 }
 
-.mensagem-cadastro{
+.mensagem-cadastro {
     color: #9dccfc;
     font-weight: 600;
-}
-#eye{
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    /*Olho da página login*/
-}
-div eyelogin{
-    position: absolute;
-    right: 20%;
-    top: 56%;
-    cursor: pointer;
-    font-size: 25px;
-    /*Estilo olho da página login*/
 }
