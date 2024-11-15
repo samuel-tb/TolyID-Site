@@ -197,13 +197,27 @@ header img {
   padding: 1rem;
 }
 
+.microchip-link:hover {
+    color: white;           /* Muda a cor do texto ao passar o mouse */
+    background-color: #007bff; /* Adiciona um fundo azul no hover */
+    padding: 5px;           /* Um pouco de espaçamento interno no hover */
+    border-radius: 5px;     /* Bordas arredondadas no hover */
+}
+
 .captura-item {
     display: flex;
     align-items: center;
-    background-color: #9dccfc; /* Cor de fundo dos itens */
-    margin-bottom: 10px; /* Espaço entre os itens */
+    background-color: #9dccfc; /* Mesma cor de fundo dos itens de microchip */
+    margin-bottom: 10px;
     padding: 10px;
-    border-radius: 8px; /* Arredondando os cantos para deixar mais suave */
+    border-radius: 8px;
+}
+
+.captura-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
 }
 
 .captura-item p {
@@ -212,20 +226,18 @@ header img {
 }
 
 .captura-link {
-    text-decoration: none;  /* Remove a linha embaixo do link */
-    color: #007bff;         /* Define a cor padrão do link */
-    font-weight: bold;      /* Deixa o texto em negrito */
-    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para hover */
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-.microchip-link:hover {
-    color: white;           /* Muda a cor do texto ao passar o mouse */
-    background-color: #007bff; /* Adiciona um fundo azul no hover */
-    padding: 5px;           /* Um pouco de espaçamento interno no hover */
-    border-radius: 5px;     /* Bordas arredondadas no hover */
+.captura-link:hover {
+    color: white;
+    background-color: #007bff;
+    padding: 5px;
+    border-radius: 5px;
 }
-
-
 
 #footer {
     margin-top: auto;

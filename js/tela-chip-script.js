@@ -108,15 +108,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.ok) {
                     const data = await response.json();
                     data.content.forEach(content =>{
-                      AnimaisCaptura.push(content.Id);
                       if(content.tatu.identificacaoAnimal == IdPagina) {
                       var [datacaptura, horacaptura] = content.dadosGerais.dataCaptura.split('T');
                       DatasCaptura.push(datacaptura);
                       HorasCaptura.push(horacaptura);
+                      AnimaisCaptura.push(content.id);
+                      
                       }
+                      
                     });
-                    for(let i = 0 ; i< DatasCaptura.length; i++){
-                    ListaCapturasApi(DatasCaptura[i], HorasCaptura[i]);
+                    for(let i = 0 ; i< AnimaisCaptura.length; i++){
+                        ListaCapturasApi(AnimaisCaptura[i], DatasCaptura[i], HorasCaptura[i]);
                     }
                     
                 } else {
@@ -232,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
             microchipItem.className = 'microchip-item';
             microchipItem.innerHTML = `
                 <img src="../img/tatu-2.jpg" alt="Foto do Tatu">
-                <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="microchip-link">Microchip: ${microchipId}</a></p>
+                <p><a href="../html/cadastro-geral.html?id=${Id}" class="microchip-link">Microchip: ${microchipId}</a></p>
             `;
             listaMicrochips.appendChild(microchipItem);
 
@@ -279,18 +281,19 @@ document.addEventListener('DOMContentLoaded', function () {
         registroMicrochips.style.display = "block";
     }
 
-    function ListaCapturasApi(DatasCaptura, HorasCaptura) {
+    function ListaCapturasApi(AnimaisCaptura, DatasCaptura, HorasCaptura) {
         if (AnimaisCaptura.length === 0) {
             console.log("Nenhuma captura no sistema");
             return;
         }
 
-        var capturaItem = document.createElement('hr');
+        var capturaItem = document.createElement('div');
         capturaItem.className = 'captura-item';
 
         capturaItem.innerHTML = `
-             <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="captura-link">Data da Captura: ${DatasCaptura}</a></p>
-                <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="captura-link">Hora da Captura: ${HorasCaptura}</a></p>
+             <p><a href="../html/cadastro-geral.html?CapturaId=${AnimaisCaptura}" class="captura-link">Data da Captura: ${DatasCaptura}</a></p>
+             <br /> 
+                <p><a href="../html/cadastro-geral.html?CapturaId=${AnimaisCaptura}" class="captura-link">Hora da Captura: ${HorasCaptura}</a></p>
             `;
 
 
