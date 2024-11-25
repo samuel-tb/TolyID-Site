@@ -50,10 +50,15 @@ async function DadosApi(){
                 document.querySelector('[name="aplicacao"]').value = ficharAnestesica.aplicacao;
                 document.querySelector('[name="inducao"]').value = ficharAnestesica.inducao;
                 document.querySelector('[name="retorno"]').value = ficharAnestesica.retorno;
+
                 document.querySelector('[name="frequenciaCardiaca"]').value = FichaParametros.frequenciaCardiaca;
                 document.querySelector('[name="frequenciaRespiratoria"]').value = FichaParametros.frequenciaRespiratoria;
                 document.querySelector('[name="oximetria"]').value = FichaParametros.oximetria;
                 document.querySelector('[name=temperatura]').value = FichaParametros.temperatura;
+                document.querySelector('[name="frequenciaCardica"]').value = ficharAnestesica.frequenciaCardica;
+                document.querySelector('[name="frequenciaRespiratoria"]').value = ficharAnestesica.frequenciaRespiratoria;
+                document.querySelector('[name="oximetria"]').value = ficharAnestesica.oximetria;
+                document.querySelector('[name=temperatura]').value = ficharAnestesica.temperatura;
 
                 const Biometria = data.biometria;
                 //Biometria
