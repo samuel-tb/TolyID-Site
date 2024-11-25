@@ -131,10 +131,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("Já existe um tatu com essa Identificação.");
                 return;
             }
-            alert("Passamos dos parametros");
             // Adiciona o ID ao array e exibe o registro
             registroAnimais.style.display = 'block';
-            alert("Deu block no registro")
             // Cria o novo item para a lista de microchips
             var animalItem = document.createElement('div');
             animalItem.className = 'animal-item';
@@ -142,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <img src="../img/tatu.jpg" alt="Foto do Tatu">
                 <p><a href="../html/tela-chip.html?id=${animalId}" class="animal-link">ID: ${animalId}</a></p>
             `;
-            alert("Criou o elemento");
             listaAnimais.appendChild(animalItem);
 
             // Limpa o campo de entrada

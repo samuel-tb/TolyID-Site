@@ -1,30 +1,112 @@
-const IdPagina = localStorage.getItem('IdPagina');
+const link = window.location.href;
+var url = new URL(link);
+const CapturaId = url.searchParams.get('CapturaId');
 var token = localStorage.getItem('Token');
 const IdApi = localStorage.getItem('IdApi');
-alert(IdApi);
 
 const registroCapturas = localStorage.getItem('registroCapturas');
 const listaCapturas = localStorage.getItem('listaCapturas');
 
-var Idnova;
-
-try {
-    const response = fetch(`http://localhost:8080/tatus/listar/${IdPagina}`, {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    });
-
-    if (response.ok) {
-        const data = response.json();
-        Idnova = data.id;
-    } else {
-        alert("Erro ao obter dados dos tatus.");
+//#region FUNÇÕES
+async function DadosApi(){
+        
+    if (CapturaId == null) {
+        console.log('Captura fora do banco de dados');
+        return;
     }
-} catch (error) {
-    alert("Erro de conexão: " + error.message);
+    
+        try {
+            console.log(CapturaId);
+            const response = await fetch(`http://localhost:8080/capturas/listar/${CapturaId}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+
+            if (response.ok) {
+                const data = await response.json();
+                const dadosGerais = data.dadosGerais;
+                var [datacaptura, horacaptura] = dadosGerais.dataCaptura.split('T');
+
+                //Dados Gerais
+                console.log(dadosGerais);
+                document.querySelector('[name="localDeCaptura"]').value = dadosGerais.localDeCaptura;
+                document.querySelector('[name="equipeResponsavel"]').value = dadosGerais.equipeResponsavel;
+                document.querySelector('[name="instituicao"]').value = dadosGerais.instituicao;
+                document.querySelector('[name="pesoDoTatu"]').value = dadosGerais.pesoDoTatu;
+                document.querySelector('[name="dataCaptura"]').value = datacaptura;
+                document.querySelector('[name="horaCaptura"]').value = horacaptura;
+                document.querySelector('[name="contatoDoResponsavel"]').value = dadosGerais.contatoDoResponsavel;
+                document.querySelector('[name="observacoes"]').value = dadosGerais.observacoes;
+
+                const ficharAnestesica = data.fichaAnestesica;
+                const FichaParametros = ficharAnestesica.parametrosFisiologicos[0];
+                console.log(ficharAnestesica);
+                //Ficha Anestesica
+                document.querySelector('[name="tipoAnestesicoOuDose"]').value = ficharAnestesica.tipoAnestesicoOuDose;
+                document.querySelector('[name="viaDeAdministracao"]').value = ficharAnestesica.viaDeAdministracao;
+                document.querySelector('[name="aplicacao"]').value = ficharAnestesica.aplicacao;
+                document.querySelector('[name="inducao"]').value = ficharAnestesica.inducao;
+                document.querySelector('[name="retorno"]').value = ficharAnestesica.retorno;
+                document.querySelector('[name="frequenciaCardiaca"]').value = FichaParametros.frequenciaCardiaca;
+                document.querySelector('[name="frequenciaRespiratoria"]').value = FichaParametros.frequenciaRespiratoria;
+                document.querySelector('[name="oximetria"]').value = FichaParametros.oximetria;
+                document.querySelector('[name=temperatura]').value = FichaParametros.temperatura;
+
+                const Biometria = data.biometria;
+                //Biometria
+                document.querySelector('[name="comprimentoTotal"]').value = Biometria.comprimentoTotal;
+                document.querySelector('[name="comprimentoDaCabeca"]').value = Biometria.comprimentoDaCabeca;
+                document.querySelector('[name="larguraDaCabeca"]').value = Biometria.larguraDaCabeca;
+                document.querySelector('[name="padraoEscudoCefalico"]').value = Biometria.padraoEscudoCefalico;
+                document.querySelector('[name="comprimentoEscudoCefalico"]').value = Biometria.comprimentoEscudoCefalico;
+                document.querySelector('[name="larguraEscudoCefalico"]').value = Biometria.larguraEscudoCefalico;
+                document.querySelector('[name="larguraInterOrbital"]').value = Biometria.larguraInterOrbital;
+                document.querySelector('[name="larguraInterLacrimal"]').value = Biometria.larguraInterLacrimal;
+                document.querySelector('[name="comprimentoDaOrelha"]').value = Biometria.comprimentoDaOrelha;
+                document.querySelector('[name="comprimentoDaCauda"]').value = Biometria.comprimentoDaCauda;
+                document.querySelector('[name="larguraDaCauda"]').value = Biometria.larguraDaCauda;
+                document.querySelector('[name="comprimentoEscudoEscapular"]').value = Biometria.comprimentoEscudoEscapular;
+                document.querySelector('[name="semicircunferenciaEscudoEscapular"]').value = Biometria.semicircunferenciaEscudoEscapular;
+                document.querySelector('[name="comprimentoEscudoPelvico"]').value = Biometria.comprimentoEscudoPelvico;
+                document.querySelector('[name="semicircunferenciaEscudoPelvico"]').value = Biometria.semicircunferenciaEscudoPelvico;
+                document.querySelector('[name="larguraNaSegundaCinta"]').value = Biometria.larguraNaSegundaCinta;
+                document.querySelector('[name="numeroDeCintas"]').value = Biometria.numeroDeCintas;
+                document.querySelector('[name="comprimentoMaoSemUnha"]').value = Biometria.comprimentoMaoSemUnha;
+                document.querySelector('[name="comprimentoUnhaDaMao"]').value = Biometria.comprimentoUnhaDaMao;
+                document.querySelector('[name="comprimentoPeSemUnha"]').value = Biometria.comprimentoPeSemUnha;
+                document.querySelector('[name="comprimentoUnhaDoPe"]').value = Biometria.comprimentoUnhaDoPe;
+                document.querySelector('[name="comprimentoDoPenis"]').value = Biometria.comprimentoDoPenis;
+                document.querySelector('[name="larguraBasePenis"]').value = Biometria.larguraBasePenis;
+                document.querySelector('[name="comprimentoDoClitoris"]').value = Biometria.comprimentoDoClitoris;
+
+                const Amostras = data.amostra;
+                //Amostras
+                document.querySelector('[name="sangue"]').checked = Amostras.sangue;
+                document.querySelector('[name="fezes"]').checked = Amostras.fezes;
+                document.querySelector('[name="pelo"]').checked = Amostras.pelo;
+                document.querySelector('[name="ectoparasitos"]').checked = Amostras.sangue;
+                document.querySelector('[name="swab"]').checked = Amostras.swab;
+                document.querySelector('[name="local"]').checked = Amostras.local;
+                document.querySelector('[name="outros"]').value = Amostras.outros;
+                
+
+
+            } else {
+                alert("Erro ao obter dados dos tatus.");
+                return;
+            }
+        } catch (error) {
+            alert("Erro de conexão: " + error.message);
+            return;
+        }
 }
+//#endregion
+
+var Idnova;
+DadosApi();
 
 var btnSalvar = document.getElementById("btnSalvar");
 
@@ -91,13 +173,13 @@ btnSalvar.addEventListener("click", async function () {
 
     // Dados gerais
     const DadosGerais_frmTatu = document.getElementById("step1");
-    const dataHoraFormatada = `${DadosGerais_frmTatu.dataCaptura.value}T${DadosGerais_frmTatu.horaCaptura.value}`;
+    const dataHoraFormatadacadastro = `${DadosGerais_frmTatu.dataCaptura.value}T${DadosGerais_frmTatu.horaCaptura.value}`;
     const Resp_DadosGerais = {
         localDeCaptura: DadosGerais_frmTatu.localDeCaptura.value,
         equipeResponsavel: DadosGerais_frmTatu.equipeResponsavel.value,
         instituicao: DadosGerais_frmTatu.instituicao.value,
         pesoDoTatu: DadosGerais_frmTatu.pesoDoTatu.value,
-        dataCaptura: dataHoraFormatada,
+        dataCaptura: dataHoraFormatadacadastro,
         contatoDoResponsavel: DadosGerais_frmTatu.contatoDoResponsavel.value,
         observacoes: DadosGerais_frmTatu.observacoes.value
     };
@@ -207,4 +289,6 @@ console.log(JSON.stringify(Resp_FichaAnestesica, null, 2));
         console.log("Erro de conexão: " + error.message);
     }
     //#endregion
+
+   
 });
