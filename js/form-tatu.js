@@ -4,18 +4,18 @@ const CapturaId = url.searchParams.get('CapturaId');
 var token = localStorage.getItem('Token');
 const IdApi = localStorage.getItem('IdApi');
 
-IdPagina = localStorage.getItem("IdPagina");
+const registroCapturas = localStorage.getItem('registroCapturas');
+const listaCapturas = localStorage.getItem('listaCapturas');
 
 //#region FUNÇÕES
 async function DadosApi(){
         
     if (CapturaId == null) {
-        console.log('Captura fora do banco de dados');
+        console.log('Nenhuma captura com esse identificador no banco de dados');
         return;
     }
     
         try {
-            console.log(CapturaId);
             const response = await fetch(`http://localhost:8080/capturas/listar/${CapturaId}`, {
                 method: "GET",
                 headers: {
@@ -23,7 +23,7 @@ async function DadosApi(){
                 }
             });
 
-
+            
             if (response.ok) {
                 const data = await response.json();
                 const dadosGerais = data.dadosGerais;
@@ -41,6 +41,7 @@ async function DadosApi(){
                 document.querySelector('[name="observacoes"]').value = dadosGerais.observacoes;
 
                 const ficharAnestesica = data.fichaAnestesica;
+                const FichaParametros = ficharAnestesica.parametrosFisiologicos[0]; //LIMITADOR DE VALORES DOS PARAMETROS ----------
                 console.log(ficharAnestesica);
                 //Ficha Anestesica
                 document.querySelector('[name="tipoAnestesicoOuDose"]').value = ficharAnestesica.tipoAnestesicoOuDose;
@@ -48,10 +49,11 @@ async function DadosApi(){
                 document.querySelector('[name="aplicacao"]').value = ficharAnestesica.aplicacao;
                 document.querySelector('[name="inducao"]').value = ficharAnestesica.inducao;
                 document.querySelector('[name="retorno"]').value = ficharAnestesica.retorno;
-                document.querySelector('[name="frequenciaCardica"]').value = ficharAnestesica.frequenciaCardica;
-                document.querySelector('[name="frequenciaRespiratoria"]').value = ficharAnestesica.frequenciaRespiratoria;
-                document.querySelector('[name="oximetria"]').value = ficharAnestesica.oximetria;
-                document.querySelector('[name=temperatura]').value = ficharAnestesica.temperatura;
+
+                document.querySelector('[name="frequenciaCardiaca"]').value = FichaParametros.frequenciaCardiaca;
+                document.querySelector('[name="frequenciaRespiratoria"]').value = FichaParametros.frequenciaRespiratoria;
+                document.querySelector('[name="oximetria"]').value = FichaParametros.oximetria;
+                document.querySelector('[name=temperatura]').value = FichaParametros.temperatura;
 
                 const Biometria = data.biometria;
                 //Biometria
@@ -93,7 +95,7 @@ async function DadosApi(){
 
 
             } else {
-                alert("Erro ao obter dados dos tatus.");
+                alert("Erro ao obter dados da captura do tatu." + response.json);
                 return;
             }
         } catch (error) {
@@ -132,7 +134,6 @@ botao_salvar.addEventListener('click', function(event) {
     // Seleciona os inputs e cria um objeto para armazenar os valores
     const inputsParametros = FichaAnestesica_frmTatu.querySelectorAll('table[name="parametrosFisiologicos"] input');
     const parametrosAtuais = {};
-    console.log(inputsParametros);
 
     // Itera sobre cada input e adiciona seus valores ao objeto
     inputsParametros.forEach(input => {
@@ -146,32 +147,16 @@ botao_salvar.addEventListener('click', function(event) {
 
 });
 
-//#region Parte de configuração para quando digitar nos inputs de penis bloquear no clitoris e vice-versa
-comp_penis.addEventListener('input', function() {
-    if (comp_penis.value.length > 0) {
-        comp_clitoris.disabled = true; // Desativa comp_clitoris
-    } else {
-        comp_clitoris.disabled = false; // Ativa novamente se o comp_penis estiver vazio
-    }
-});
+//#region Parte de configuração para quando o animal for de um sexo ele irá desabilitar os campos desnecessários
+if(Sexo == "M"){
+    comp_clitoris.disabled = true;
+}
 
-larg_penis.addEventListener('input', function() {
-    if (larg_penis.value.length > 0) {
-        comp_clitoris.disabled = true; // Desativa comp_clitoris
-    } else {
-        comp_clitoris.disabled = false; // Ativa novamente se o larg_penis estiver vazio
-    }
-});
-
-comp_clitoris.addEventListener('input', function() {
-    if (comp_clitoris.value.length > 0) {
-        comp_penis.disabled = true; // Desativa comp_penis
-        larg_penis.disabled = true; // Desativa larg_penis
-    } else {
-        comp_penis.disabled = false; // Ativa novamente se o comp_clitoris estiver vazio
-        larg_penis.disabled = false; // Ativa novamente se o comp_clitoris estiver vazio
-    }
-});
+else if(Sexo == "F"){
+    comp_penis.disabled = true;
+    larg_penis.disabled = true;
+}
+//#endregion
 
 btnSalvar.addEventListener("click", async function () {
 
@@ -202,8 +187,6 @@ const Resp_FichaAnestesica = {
    parametrosFisiologicos: parametrosFisiologicos, 
 };
 
-// Exibe o objeto JSON no console
-console.log(JSON.stringify(Resp_FichaAnestesica, null, 2));
 
 
 
@@ -248,6 +231,11 @@ console.log(JSON.stringify(Resp_FichaAnestesica, null, 2));
         outros: Amostras_frmTatu.outros.checked
     };
 
+    console.log(Resp_DadosGerais);
+    console.log(Resp_FichaAnestesica);
+    console.log(Resp_Biometria);
+    console.log(Resp_Amostras);
+
 
     //#region Parte que faz a requisição de cadastro da captura
     try {
@@ -256,7 +244,9 @@ console.log(JSON.stringify(Resp_FichaAnestesica, null, 2));
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + token,
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
+
+
             },
             body: JSON.stringify({
                 dadosGerais: Resp_DadosGerais,
@@ -275,7 +265,16 @@ console.log(JSON.stringify(Resp_FichaAnestesica, null, 2));
               return response.text(); // Caso contrário, leia como texto
             }
           }).then((data) => {
-            window.location.href = `./tela-chip.html?id=${IdPagina}`;
+            registroCapturas.style.display = 'block';
+
+            var capturaItem = document.createElement('div');
+            capturaItem.className = 'captura-item';
+            capturaItem.innerHTML = `
+                <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="captura-link">Data da Captura: ${data}</a></p>
+                <p><a href="../html/tela-id.html?id=${IdPagina}" class="captura-link">Hora da Captura: ${Hora}</a></p>
+            `;
+            listaCapturas.appendChild(capturaItem);
+
           })
           .catch((error) => {
             console.error('Erro de conexão:', error);

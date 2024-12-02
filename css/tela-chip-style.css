@@ -124,6 +124,10 @@ header img {
     cursor: pointer;
 }
 
+.mensagem-cadastro{
+    color: red;
+}
+
 .btn.cancel {
     background-color: #dc3545;
 }

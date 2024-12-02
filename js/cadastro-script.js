@@ -70,11 +70,16 @@ cadastro.addEventListener("click", function cadastrarUsuario() {
 
             // Exibe uma mensagem de sucesso
             document.querySelector(".mensagem-cadastro").innerHTML = "Usuário cadastrado com sucesso! Volte para a tela de login para acessar sua conta.";
+
+
         }
     } else {
         document.querySelector(".mensagem-cadastro").innerHTML = "Por favor, preencha todos os campos corretamente!";
     }
+
 });
+
+
 
 // Função para formatar o CPF
 function formatarCPF(cpf) {
@@ -90,11 +95,41 @@ function formatarCPF(cpf) {
 // Função para formatar o telefone
 function formatarTelefone(telefone) {
 
+
     telefone = telefone.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
     if (telefone.length > 11) telefone = telefone.substring(0, 11); // Limita o telefone a 11 dígitos
     telefone = telefone.replace(/(\d{2})(\d)/, "($1) $2"); // Insere os parênteses no DDD
     telefone = telefone.replace(/(\d{4,5})(\d{4})$/, "$1-$2"); // Insere o traço no número
     return telefone;
+}
+
+async function CadastroUsuarioAPI(nome, email, senha){
+
+    try {
+        // Envia a requisição do cadastro do tatu
+        const response = await fetch('http://localhost:8080/usuarios/cadastrar', {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                identificacaoAnimal: IdString, numeroMicrochip: microchipInt}),
+        });
+
+        // Processa a resposta
+        if (response.ok) {
+            const data = await response.json();
+        } else {
+            const errorData = await response.json();
+            console.error("Erro do servidor:", errorData);
+            document.querySelector(".mensagem-cadastro").innerHTML = "Número inválido. Por favor, tente novamente.";
+        }
+    } catch (error) {
+        console.log("Erro de conexão: " + error.message);
+    }
+   
+
 }
 
 // Evento que formata o CPF no campo de cadastro enquanto o usuário digita

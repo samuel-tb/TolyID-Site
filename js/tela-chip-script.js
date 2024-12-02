@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const link = window.location.href;
     let token = localStorage.getItem('Token');
 
+    var SexoAnimal = localStorage.getItem("SexoAnimal");
+
 
     const seta = document.querySelector(".navbtn");
 
@@ -22,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //#region RECUPERAÇÃO DE DADOS DA PÁGINA ANTERIOR
     const IdDigitado = localStorage.getItem('IdDigitado');
-    console.log(IdDigitado);
     // Array com os microchips da API
     const ChipAnimais = [];
     
@@ -30,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     ChipsApi.forEach(chip => { 
         ChipAnimais.push(chip);
     });
-    console.log(ChipAnimais);
     //#endregion
 
     // Extrai o parâmetro 'id' da URL do link
@@ -41,8 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //#region O modal de boas-vindas
     const Newmodal = document.getElementById("Bemvindo_chip"); // Certifique-se que o ID corresponde exatamente ao HTML
 
-    // Verifique se o elemento foi encontrado
-    console.log("Newmodal:", Newmodal);
+    
 
     function openModal() {
         if (Newmodal) Newmodal.style.display = "block";
@@ -52,9 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (Newmodal) Newmodal.style.display = "none";
     }
 
-    openModal();
 
-    document.querySelector(".Btn_Fechar")?.addEventListener("click", closeModal);
+    document.querySelector(".Btn_Sim")?.addEventListener("click", closeModal);
 
     window.addEventListener("click", function (event) {
         if (event.target === Newmodal) {
@@ -63,39 +61,51 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     //#endregion
 
+
     var listaMicrochips = document.getElementById('listaMicrochips');
     var registroMicrochips = document.getElementById('registroMicrochips');
-    var btnFechar = document.getElementById('FecharModal');
-    
-    //#region Requisição GET da lista de microchip do tatu
-    if (btnFechar) {
-        btnFechar.addEventListener('click', async (event) => {
-            event.preventDefault();
 
+    var Btn_Nao = document.querySelector(".Btn_Nao");
+
+
+    //#region Requisição GET da lista de microchip do tatu
             if (!token) {
-                alert("Por favor, faça login primeiro.");
+                console.log("Por favor, faça login primeiro.");
                 return;
             }
             //#region Requisição Get para os Chips cadastrados
             try {
-                const response = await fetch(`http://localhost:8080/tatus/listar/${IdPagina}`, {
+                response = fetch(`http://localhost:8080/tatus/listar/${IdPagina}`, {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
                     }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    IdApi = data.id;
-                    chip = data.numeroMicrochip;
+                }).then(response => response.text()) // Usa text() primeiro para evitar erros
+                .then(data => {
+                    const jsonData = JSON.parse(data); // Tenta converter para JSON
+                    IdApi = jsonData.id;
+                    Sexo = jsonData.sexo;
+                    chip = jsonData.numeroMicrochip;
                     localStorage.setItem('IdApi', IdApi);
-                    ListaMicrochipApi(IdPagina, chip);
-                } else {
-                    alert("Erro ao obter dados dos tatus.");
-                }
-            } catch (error) {
-                alert("Erro de conexão: " + error.message);
+                    localStorage.setItem("Sexo", Sexo); 
+                    if(chip == null) 
+                        {
+                            console.log("Microchip não identificado para esse Identificador.");
+                            openModal();
+                            CadastrarTatuSemChip()
+                        }
+                    else{
+                        ListaMicrochipApi(IdPagina, chip);
+                        return;
+                    }
+                  
+                  
+                }) 
+            }        
+            catch (error) {
+                console.log("AAAAAAAAAAAAAAAAA");
+                openModal();
+                return;
             }
             //#endregion
 
@@ -302,51 +312,6 @@ document.addEventListener('DOMContentLoaded', function () {
         registroCapturas.style.display = "block";
     }
 
-    async function CadastrarTatuSemChip(){
-        if(Btn_Nao){
-    
-        Btn_Nao.addEventListener('click', async (event) =>{
-            event.preventDefault();
-            try {
-                // Envia a requisição do cadastro do tatu
-                const response = await fetch('http://localhost:8080/tatus/cadastrar', {
-                    method: "POST",
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        identificacaoAnimal: IdPagina,
-                        sexo: SexoAnimal}),
-                        
-                })
-                // Processa a resposta
-                if (response.ok) {
-                    const data = await response.json();
-                    alert(data);
-                } else {
-                    const errorData = await response.json();
-                    console.error("Erro do servidor:", errorData);
-                    document.querySelector(".mensagem-cadastro").innerHTML = "Já existe um tatu com o Identificador registrado.Por favor, informe outro Identificador";
-                    setTimeout(() => {
-                        window.location.href = "./html/tela-id.html"; 
-                      }, 5000);
-                }
-                    
-            } catch (error) {
-                console.log("Erro de conexão: " + error.message);
-                    document.querySelector(".mensagem-cadastro").innerHTML = "Já existe um tatu com o Identificador registrado.Por favor, informe outro Identificador.Retornando....";
-                    setTimeout(() => {
-                        window.location.href = "/html/tela-id.html"; 
-                      }, 3500)
-            }
-            
-        })
-    };
-        }
+    //#endregion
 
-   
-       //#endregion
-    });
-}
 });
