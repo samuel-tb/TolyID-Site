@@ -4,8 +4,7 @@ const CapturaId = url.searchParams.get('CapturaId');
 var token = localStorage.getItem('Token');
 const IdApi = localStorage.getItem('IdApi');
 
-const registroCapturas = localStorage.getItem('registroCapturas');
-const listaCapturas = localStorage.getItem('listaCapturas');
+IdPagina = localStorage.getItem("IdPagina");
 
 //#region FUNÇÕES
 async function DadosApi(){
@@ -103,6 +102,12 @@ async function DadosApi(){
         }
 }
 //#endregion
+
+const seta = document.querySelector(".navbtn");
+
+    seta.addEventListener('click', function() {
+        window.location.href = `./tela-chip.html?id=${IdPagina}`;
+    })
 
 var Idnova;
 DadosApi();
@@ -270,16 +275,7 @@ console.log(JSON.stringify(Resp_FichaAnestesica, null, 2));
               return response.text(); // Caso contrário, leia como texto
             }
           }).then((data) => {
-            registroCapturas.style.display = 'block';
-
-            var capturaItem = document.createElement('div');
-            capturaItem.className = 'captura-item';
-            capturaItem.innerHTML = `
-                <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="captura-link">Data da Captura: ${data}</a></p>
-                <p><a href="../html/tela-id.html?id=${IdPagina}" class="captura-link">Hora da Captura: ${Hora}</a></p>
-            `;
-            listaCapturas.appendChild(capturaItem);
-
+            window.location.href = `./tela-chip.html?id=${IdPagina}`;
           })
           .catch((error) => {
             console.error('Erro de conexão:', error);

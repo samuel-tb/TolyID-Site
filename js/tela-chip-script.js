@@ -7,9 +7,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const link = window.location.href;
     let token = localStorage.getItem('Token');
 
-    localStorage.setItem('registroCapturas', document.getElementById('registroMicrochips').innerText);
 
-    localStorage.setItem('listaCapturas', document.getElementById('listaCapturas').innerText);
+    const seta = document.querySelector(".navbtn");
+
+    seta.addEventListener('click', function() {
+        window.location.href = "./tela-id.html";
+    })
 
     const registroCapturas = document.getElementById('registroCapturas');
     const listaCapturas = document.getElementById('listaCapturas');
@@ -98,40 +101,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //#region Requisição para as capturas cadastradas
             try{
-                const response = await fetch(`http://localhost:8080/capturas/listar`, {
+                response = fetch(`http://localhost:8080/capturas/listar`, {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
                     }
-                });
+                }).then(response => response.text())
 
-                if (response.ok) {
-                    const data = await response.json();
-                    data.content.forEach(content =>{
-                      if(content.tatu.identificacaoAnimal == IdPagina) {
-                      var [datacaptura, horacaptura] = content.dadosGerais.dataCaptura.split('T');
-                      DatasCaptura.push(datacaptura);
-                      HorasCaptura.push(horacaptura);
-                      AnimaisCaptura.push(content.id);
-                      
-                      }
-                      
-                    });
+                .then(data => {
+                    const jsonData = JSON.parse(data);
+                    jsonData.content.forEach(content =>{
+                        if(content.tatu.identificacaoAnimal == IdPagina) {
+                        var [datacaptura, horacaptura] = content.dadosGerais.dataCaptura.split('T');
+                        DatasCaptura.push(datacaptura);
+                        HorasCaptura.push(horacaptura);
+                        AnimaisCaptura.push(content.id);
+                } 
+            })
                     for(let i = 0 ; i< AnimaisCaptura.length; i++){
                         ListaCapturasApi(AnimaisCaptura[i], DatasCaptura[i], HorasCaptura[i]);
                     }
-                    
-                } else {
-                    alert("Erro ao obter dados dos tatus.");
-                }
-            } catch (error) {
-                alert("Erro de conexão: " + error.message);
-            }
+                });
 
-        });
-    } else {
-        console.error('Elemento #FecharModal não encontrado.');
-    }
+            } catch (error) {
+                console.log("Erro de conexão: " + error.message);
+            };
+    
+
+    
+
     //#endregion
 
     //#region PARTE DO DESIGN E FUNÇÕES ANTES
@@ -162,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Lógica para o botão "Cancelar"
-    var cancelBtn = document.querySelector('.btn.cancel');
+    var cancelBtn = document.querySelector('.btncancel');
     cancelBtn.addEventListener('click', function () {
         modal.style.display = 'none';
     });
@@ -210,7 +208,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        identificacaoAnimal: IdString, numeroMicrochip: microchipInt}),
+                        identificacaoAnimal: IdString, numeroMicrochip: microchipInt,
+                        sexo: SexoAnimal
+                    }),
                 });
     
                 // Processa a resposta
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
             microchipItem.className = 'microchip-item';
             microchipItem.innerHTML = `
                 <img src="../img/tatu-2.jpg" alt="Foto do Tatu">
-                <p><a href="../html/cadastro-geral.html?id=${Id}" class="microchip-link">Microchip: ${microchipId}</a></p>
+                <p><a href="../html/cadastro-geral.html?id=${IdPagina}" class="microchip-link">Microchip: ${microchipId}</a></p>
             `;
             listaMicrochips.appendChild(microchipItem);
 
@@ -302,6 +302,51 @@ document.addEventListener('DOMContentLoaded', function () {
         registroCapturas.style.display = "block";
     }
 
-    //#endregion
+    async function CadastrarTatuSemChip(){
+        if(Btn_Nao){
+    
+        Btn_Nao.addEventListener('click', async (event) =>{
+            event.preventDefault();
+            try {
+                // Envia a requisição do cadastro do tatu
+                const response = await fetch('http://localhost:8080/tatus/cadastrar', {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        identificacaoAnimal: IdPagina,
+                        sexo: SexoAnimal}),
+                        
+                })
+                // Processa a resposta
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(data);
+                } else {
+                    const errorData = await response.json();
+                    console.error("Erro do servidor:", errorData);
+                    document.querySelector(".mensagem-cadastro").innerHTML = "Já existe um tatu com o Identificador registrado.Por favor, informe outro Identificador";
+                    setTimeout(() => {
+                        window.location.href = "./html/tela-id.html"; 
+                      }, 5000);
+                }
+                    
+            } catch (error) {
+                console.log("Erro de conexão: " + error.message);
+                    document.querySelector(".mensagem-cadastro").innerHTML = "Já existe um tatu com o Identificador registrado.Por favor, informe outro Identificador.Retornando....";
+                    setTimeout(() => {
+                        window.location.href = "/html/tela-id.html"; 
+                      }, 3500)
+            }
+            
+        })
+    };
+        }
 
+   
+       //#endregion
+    });
+}
 });

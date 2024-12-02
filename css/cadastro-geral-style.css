@@ -8,7 +8,7 @@ html, body {
     height: 100%; /* Garante que o body ocupe toda a altura da página */
     width: 100%;
     margin: 0;
-    padding: 0;
+    
     overflow-x: hidden; /* Para evitar qualquer rolagem horizontal indesejada */
     display: flex;
     flex-direction: column;
@@ -16,11 +16,46 @@ html, body {
     
 }
 
+.back-arrow {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10; /* Garante que a seta fique acima de outros elementos */
+}
+
+.back-arrow:hover {
+    color: #ffcccb; /* Cor ao passar o mouse */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 10px 0; /* Para dar um espaço entre os botões */
+}
+
 #header {
-    color: #fff;
     background-color: #0056b3;
-    padding: 15px;
-    width: 100vw; /* Garante que o header ocupe toda a largura da tela */
+    color: white;
+    padding: 28px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+#header h1 {
+    margin: 0;
+    padding: 10px 15px;
+    color: white;
+    text-align: center;
+    margin-right: 32.5px;
+    flex: 1; /* Garante que o título ocupe todo o espaço restante */
 }
 
 #main {
@@ -158,7 +193,7 @@ button:hover {
     color: #fff;
     text-align: center;
     padding: 15px;
-    width: 100%; /* Para garantir que o footer ocupe toda a largura */
+    
 }
 
 /* Responsividade para telas menores */
