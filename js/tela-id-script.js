@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const IdAnimais = [];
     const ChipAnimais = [];
     var registroAnimais = document.getElementById('registroAnimais');
+    var SexoAnimal;
 
     //#region O modal de boas-vindas
     const newmodal = document.getElementById("Bemvindo_Id");
@@ -24,6 +25,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     //#endregion
+
+    // Seleciona os inputs de rádio
+const sexoRadios = document.getElementsByName("sexo");
+const SexoM = document.getElementById("SexoM");
+const SexoF = document.getElementById("SexoF");
+
+// Aqui a parte da seleção do sexo
+sexoRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+        if(radio.value == "masculino"){
+            SexoAnimal = "M";
+            SexoF.disabled = true;
+        }
+        else if(radio.value == "feminino"){
+            SexoAnimal = "F";
+            SexoM.disabled = true;
+        }    
+
+        localStorage.setItem("SexoAnimal", SexoAnimal);
+
+    });
+});
+
 
     var btnFechar = document.getElementById('FecharModal');
     
@@ -148,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Exibe a mensagem de sucesso no modal de cadastro
             var successMessage = document.createElement('p');
             successMessage.style.color = 'green';
-            successMessage.innerText = "Microchip cadastrado com sucesso!";
+            successMessage.innerText = "Id cadastrado com sucesso!";
             document.querySelector('.modal-content').appendChild(successMessage);
 
             // Remove a mensagem após um tempo e fecha o modal
